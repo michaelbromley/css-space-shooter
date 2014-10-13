@@ -45,6 +45,11 @@ function Alien(el, x, y, config) {
         if (self.hit) {
             destroy();
         }
+
+        if (500 < self.z) {
+            emitMissEvent();
+        }
+
         return 500 < self.z || self.destroyed;
     };
 
@@ -57,6 +62,11 @@ function Alien(el, x, y, config) {
         setTimeout(function() {
             self.destroyed = true;
         }, 1200);
+    }
+
+    function emitMissEvent() {
+        var event = new CustomEvent('miss', { 'detail': -500 });
+        document.dispatchEvent(event);
     }
 }
 
@@ -90,21 +100,18 @@ var alienFactory = (function() {
         },
 
         updatePositions: function(ship, timestamp) {
-            var aliensToRemove = [];
-            var remove, i, aliensMissed = 0;
+            var el, remove, i, aliensToRemove = [];
+
             for(i = 0; i < aliens.length; i++) {
                 remove = aliens[i].updatePosition(ship.x, ship.y, timestamp);
                 if (remove) {
-                    if (500 < aliens[i].z) {
-                        aliensMissed ++;
-                    }
                     aliensToRemove.push(i);
                 }
             }
 
             // remove any aliens that have made it past the player
             for(i = aliensToRemove.length - 1; i >= 0; --i) {
-                var el = aliens[aliensToRemove[i]].el;
+                el = aliens[aliensToRemove[i]].el;
                 aliens.splice(aliensToRemove[i], 1);
                 document.querySelector('.scene').removeChild(el);
             }

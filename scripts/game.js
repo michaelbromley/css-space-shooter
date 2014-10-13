@@ -47,12 +47,7 @@ function tick(timestamp) {
     missedAlienCount = alienFactory.updatePositions(ship, timestamp);
     hit = collisionDetector.check(shotFactory.shots(), alienFactory.aliens());
 
-    if (hit) {
-        score += 100 * shotFactory.firepower();
-    }
-    if (0 < missedAlienCount) {
-        score -= 500;
-    }
+
 
     display.update(event, shotFactory.firepower(), score);
 
@@ -75,4 +70,12 @@ document.addEventListener('keydown', function(e) {
 document.addEventListener('keyup', function(e) {
     var keyCode = e.which;
     keysDown.splice(keysDown.indexOf(keyCode), 1);
+});
+
+document.addEventListener('hit', function(e) {
+    score += e.detail * shotFactory.firepower();
+});
+
+document.addEventListener('miss', function(e) {
+    score += e.detail;
 });

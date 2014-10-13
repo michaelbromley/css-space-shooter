@@ -20,6 +20,7 @@ var collisionDetector = (function() {
                     alien.hit = true;
                     shot.hit = true;
                     hit = true;
+                    emitHitEvent();
                 }
             });
 
@@ -34,6 +35,11 @@ var collisionDetector = (function() {
             }
         }
         return false;
+    }
+
+    function emitHitEvent() {
+        var event = new CustomEvent('hit', { 'detail': 100 });
+        document.dispatchEvent(event);
     }
 
     return module;
