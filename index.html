@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="vendor/prefixfree.min.js"></script>
+    <link rel="stylesheet" href="styles/scene.css">
+    <link rel="stylesheet" href="styles/page.css">
+</head>
+<body>
+
+<div class="scene">
+
+    <div class="face background">
+        <div class="planet"></div>
+        <div class="stars"></div>
+    </div>
+
+    <div class="face midground">
+        <div class="track-container">
+            <div class="face track top"></div>
+            <div class="face track top"></div>
+            <div class="face track top"></div>
+            <div class="face track top"></div>
+            <div class="face track top"></div>
+        </div>
+        <div class="track-container">
+            <div class="face track bottom"></div>
+            <div class="face track bottom"></div>
+            <div class="face track bottom"></div>
+            <div class="face track bottom"></div>
+            <div class="face track bottom"></div>
+            <div class="face track bottom"></div>
+        </div>
+    </div>
+
+    <div class="face ship-container">
+        <div class="face ship hull top"></div>
+        <div class="face ship hull bottom"></div>
+        <div class="face ship hull back"></div>
+        <div class="face ship booster"></div>
+        <div class="face ship wing top"></div>
+        <div class="face ship wing bottom"></div>
+        <div class="face ship wing back"></div>
+        <div class="face ship gun left"></div>
+        <div class="face ship gun right"></div>
+    </div>
+
+    <div class="face shot"></div>
+
+    <div class="face alien-container">
+        <div class="face alien body"></div>
+        <div class="face alien eye left"></div>
+        <div class="face alien eye right"></div>
+        <div class="face alien mouth"></div>
+        <div class="face arm-container">
+            <div class="face alien arm left"></div>
+            <div class="face alien arm right"></div>
+            <div class="face alien arm bottom"></div>
+        </div>
+    </div>
+
+</div>
+
+<div class="firepower-meter-container">
+    <span class="firepower-meter"></span>
+</div>
+<div class="announcement"></div>
+<div class="score-container">
+    <div class="score"></div>
+</div>
+
+<script src="scripts/noise.js"></script>
+<script src="scripts/level.js"></script>
+<script src="scripts/ship.js"></script>
+<script src="scripts/shot.js"></script>
+<script src="scripts/alien.js"></script>
+<script src="scripts/collisionDetector.js"></script>
+<script src="scripts/track.js"></script>
+<script src="scripts/display.js"></script>
+<script src="scripts/game.js"></script>
+</body>
+</html>

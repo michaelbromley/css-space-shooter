@@ -1,0 +1,76 @@
+@import "vars";
+/**
+ * The track
+ */
+@track-color: green;
+@track-line-width: 8px;
+@track-box-shadow: inset 0 0 30px @track-color, 0px 0px 30px 0px @track-color;
+@track-tile-width: 60 * @scale;
+@track-tile-height: 600px;
+.track-container {
+  position: inherit;
+  z-index: 10;
+  transform-style: preserve-3d;
+}
+.track {
+  opacity: 0;
+  width: @track-tile-width;
+  height: @track-tile-height;
+  margin: -@track-tile-height/2 -@track-tile-width/2;
+  border: @track-line-width solid @track-color;
+  box-shadow: @track-box-shadow;
+  border-left-width: @track-line-width/3;
+  border-right-width: @track-line-width/3;
+}
+.track:before {
+  content: '';
+  position: absolute;
+  width: @track-tile-width/3;
+  height: @track-tile-height;
+  border-left: @track-line-width/3 solid @track-color;
+  border-right: @track-line-width/3 solid @track-color;
+  box-shadow: @track-box-shadow;
+  left: @track-tile-width/3;;
+}
+.track:after {
+  content: '';
+  position: absolute;
+  width: @track-tile-width;
+  height: @track-tile-height/3;
+  border-top: @track-line-width solid @track-color;
+  border-bottom: @track-line-width solid @track-color;
+  box-shadow: @track-box-shadow;
+  top: @track-tile-height/3;
+}
+.track.top {
+}
+.track.bottom {
+}
+.generate-track-animation-definition(@name, @translateY) {
+  @keyframes @name {
+    0% {
+      opacity: 0;
+      transform: translateY(@translateY) translateZ(-2000px) rotateX(90deg);
+    }
+    30% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(@translateY) translateZ(1000px) rotateX(90deg);
+    }
+  }
+}
+.generate-track-animation-definition(track-animation-top, -@scale * 15);
+.generate-track-animation-definition(track-animation-bottom, @scale * 15);
+
+.generate-track-ids(@n, @i: 1) when (@i =< @n) {
+  .track.top:nth-child(@{i})  {
+    animation: track-animation-top 3s linear (@i - 1) * 0.6s infinite normal;
+  }
+  .track.bottom:nth-child(@{i})  {
+    animation: track-animation-bottom 3s linear (@i - 1) * 0.6s infinite normal;
+  }
+  .generate-track-ids(@n, (@i + 1));
+}
+.generate-track-ids(6);
