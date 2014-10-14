@@ -17,10 +17,12 @@ var collisionDetector = (function() {
 
             shots.forEach(function(shot) {
                 if (collision(alien, shot)) {
-                    alien.hit = true;
+                    if (!alien.hit) {
+                        alien.hit = true;
+                        emitHitEvent();
+                    }
                     shot.hit = true;
                     hit = true;
-                    emitHitEvent();
                 }
             });
 

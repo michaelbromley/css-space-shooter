@@ -62,6 +62,21 @@ body {
   font-size: 8vh;
   font-family: arial, helvetica, sans serif;
 }
+.lives-container {
+  position: absolute;
+  bottom: 75px;
+  right: 15px;
+}
+.lives-container .life {
+  font-size: 60px;
+  color: white;
+  display: inline-block;
+  opacity: 0.7;
+  transition: opacity 1s;
+}
+.lives-container .life.hidden {
+  opacity: 0;
+}
 @keyframes spin {
   0% {
     transform: rotateZ(0);

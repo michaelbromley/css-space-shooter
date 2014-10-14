@@ -6,12 +6,13 @@ var ship = new Ship(
     document.documentElement.clientWidth,
     document.documentElement.clientHeight);
 var track = new Track(document.querySelector('.midground'));
-var hit, missedAlienCount, score = 0;
+var hit, missedAlienCount, score = 0, lives = 3;
 var keysDown = [];
 
 display.setAnnouncerElement(document.querySelector('.announcement'));
 display.setFirepowerElement(document.querySelector('.firepower-meter-container'));
 display.setScoreElement(document.querySelector('.score'));
+display.setLivesElement(document.querySelector('.lives-container'));
 shotFactory.setTemplate(document.querySelector('.shot'));
 alienFactory.setTemplate(document.querySelector('.alien-container'));
 levelPlayer.setLevel(levelData);
@@ -20,6 +21,8 @@ levelPlayer.setLevel(levelData);
  * Game loop
  */
 function tick(timestamp) {
+    var event;
+
     if (0 < keysDown.length) {
         if (keysDown.indexOf(39) !== -1) {
             ship.moveLeft();
@@ -38,7 +41,7 @@ function tick(timestamp) {
         }
     }
 
-    var event = levelPlayer.getEvents(timestamp);
+    event = levelPlayer.getEvents(timestamp);
 
     ship.updatePosition(timestamp);
     track.update(ship);
@@ -74,8 +77,14 @@ document.addEventListener('keyup', function(e) {
 
 document.addEventListener('hit', function(e) {
     score += e.detail * shotFactory.firepower();
+    console.log('hit! ' + new Date().getSeconds());
+    levelPlayer.alienRemoved();
 });
 
 document.addEventListener('miss', function(e) {
-    score += e.detail;
+    if (0 < lives) {
+        lives--;
+        display.updateLives(lives);
+    }
+    levelPlayer.alienRemoved();
 });

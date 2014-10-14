@@ -72,6 +72,23 @@ html, body {
   }
 }
 
+.lives-container {
+  position: absolute;
+  bottom: 75px;
+  right: 15px;
+  .life {
+    font-size: 60px;
+    color: white;
+    display: inline-block;
+    opacity: 0.7;
+    transition: opacity 1s;
+
+    &.hidden {
+      opacity: 0;
+    }
+  }
+}
+
 @import "background";
 @import "ship";
 @import "track";

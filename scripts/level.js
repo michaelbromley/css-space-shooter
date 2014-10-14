@@ -7,54 +7,81 @@
  */
 var levelPlayer = (function() {
     var module = {};
-    var startTime, levelData, secondsElapsed;
+    var startTime, levelData, secondsElapsed, activeAliens = 0, currentStageIndex = 0;
 
     module.setLevel = function(level) {
         levelData = level;
     };
 
     module.getEvents = function(timestamp) {
+        var currentStage;
+
         if (typeof startTime === 'undefined') {
             startTime = timestamp;
         }
 
+        currentStage = getCurrentStage();
         secondsElapsed = getSecondsElapsed(startTime, timestamp);
-        return getEventAtTime(secondsElapsed, levelData);
+        return getEventAtTime(secondsElapsed, currentStage);
+    };
+
+    module.alienRemoved = function() {
+        activeAliens = Math.max(activeAliens - 1, 0);
+        console.log('activeAliens: ' + activeAliens);
     };
 
     function getSecondsElapsed(startTime, timestamp) {
         return Math.floor((timestamp - startTime) / 1000);
     }
 
-    function getEventAtTime(secondsElapsed, levelData) {
-        var totalDuration = 0;
-        var l = 0;
-        var eventObject = [];
-
-        while (totalDuration + levelData[l].duration < secondsElapsed && l < levelData.length - 1) {
-            l++;
-            totalDuration += levelData[l].duration;
+    function getCurrentStage(timestamp) {
+        if (allStageEventsFired() && activeAliens === 0) {
+            currentStageIndex ++;
+            activeAliens = 0;
+            startTime = timestamp;
+            console.log('Start stage ' + (currentStageIndex + 1));
         }
+        return levelData[currentStageIndex];
+    }
 
-        var level = levelData[l];
-        for (var e = 0; e < level.events.length; e++) {
-            var event = level.events[e];
+    function allStageEventsFired() {
+        var stageEvents = levelData[currentStageIndex].events;
+        return stageEvents[stageEvents.length - 1].fired === true;
+    }
 
-            if (event.time + totalDuration === secondsElapsed) {
+    function getEventAtTime(secondsElapsed, currentStage) {
+        var e, event;
+
+        for (e = 0; e < currentStage.events.length; e++) {
+            event = currentStage.events[e];
+
+            if (event.time === secondsElapsed) {
                 if (!event.fired) {
                     event.fired = true;
-                    eventObject = event;
-                    break;
+                    setActiveAliens(event);
+                    return event;
                 }
             }
         }
 
-        return eventObject;
+        return [];
+    }
+
+    function setActiveAliens(event) {
+        if (event.type === 'spawn') {
+            activeAliens += event.data.length;
+            console.log('activeAliens: ' + activeAliens);
+        }
     }
 
     return module;
 })();
 
+/**
+ * An "enum" of the different types of alien
+ *
+ * @type {{stationary: number, vertical: number, horizontal: number, spiral: number, random: number}}
+ */
 var ALIEN_CLASS = {
     stationary: 1,
     vertical: 2,
@@ -70,15 +97,13 @@ var ALIEN_CLASS = {
  */
 var levelData = [
     {
-        duration: 15,
         events: [
             { time: 0, type: 'spawn', data: [ALIEN_CLASS.horizontal, ALIEN_CLASS.vertical, ALIEN_CLASS.random] },
             { time: 1, type: 'announcement', data: ['Stage 1'] },
-            { time: 4, type: 'spawn', data: [ALIEN_CLASS.stationary, ALIEN_CLASS.stationary] },
+            { time: 4, type: 'spawn', data: [ALIEN_CLASS.stationary, ALIEN_CLASS.stationary] }
         ]
     },
     {
-        duration: 15,
         events: [
             { time: 1, type: 'announcement', data: ['Stage 2'] },
             { time: 3, type: 'spawn', data: [ALIEN_CLASS.vertical] },
@@ -87,7 +112,6 @@ var levelData = [
         ]
     },
     {
-        duration: 20,
         events: [
             { time: 1, type: 'announcement', data: ['Stage 3'] },
             { time: 3, type: 'spawn', data: [ALIEN_CLASS.spiral] },

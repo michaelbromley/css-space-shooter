@@ -14,7 +14,7 @@ function Announcer(el) {
 
 var display = (function() {
     var module = {};
-    var announcer, firepowerContainer, score;
+    var announcer, firepowerContainer, score, livesContainer;
 
     module.setAnnouncerElement = function(el) {
         announcer = new Announcer(el);
@@ -28,12 +28,26 @@ var display = (function() {
         score = el;
     };
 
+    module.setLivesElement = function(el) {
+        livesContainer = el;
+    };
+
     module.update = function(event, firepower, newScore) {
         if (event.type && event.type === 'announcement') {
             announcer.showMessage(event.data);
         }
         firepowerContainer.style.width = (firepower * 30) + 'px';
         score.innerHTML = Math.round(newScore);
+    };
+
+    module.updateLives = function(livesRemaining) {
+        var i, totalLives = 3;
+
+        if (livesRemaining < totalLives) {
+            for (i = totalLives; i > livesRemaining; i--) {
+                livesContainer.children[i-1].classList.add('hidden');
+            }
+        }
     };
 
     return module;
