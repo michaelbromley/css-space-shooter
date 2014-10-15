@@ -12,7 +12,6 @@ var collisionDetector = (function() {
     var alienBBY = screenHeight * 0.07;
 
     module.check = function(shots, aliens) {
-        var hit = false;
         aliens.forEach(function(alien) {
 
             shots.forEach(function(shot) {
@@ -22,12 +21,10 @@ var collisionDetector = (function() {
                         emitHitEvent();
                     }
                     shot.hit = true;
-                    hit = true;
                 }
             });
 
         });
-        return hit;
     };
 
     function collision(alien, shot) {

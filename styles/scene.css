@@ -34,23 +34,45 @@ body {
 }
 .firepower-meter-container .firepower-meter {
   display: block;
+  position: relative;
   border-radius: 5px;
   width: 300px;
   height: 30px;
   background: linear-gradient(to right, #aa2222 0%, #e88325 21%, #00e207 60%, #ffffff 87%);
   /* W3C */
 }
+.firepower-meter-container .firepower-meter span {
+  position: absolute;
+  font-family: 'Exo', sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 27px;
+  top: -2px;
+  left: 10px;
+}
 .announcement {
   opacity: 0;
   position: absolute;
   width: 100%;
   margin-top: 40vh;
+  font-family: 'Exo', sans-serif;
+  font-weight: 900;
+  font-style: italic;
   color: white;
-  font-size: 12vh;
   text-align: center;
-  font-family: arial, helvetica, sans serif;
   text-transform: uppercase;
   transition: opacity 0.5s;
+}
+.announcement.visible {
+  opacity: 0.8;
+}
+.announcement .title {
+  font-size: 12vh;
+}
+.announcement .subtitle {
+  font-size: 8vh;
 }
 .score-container {
   position: absolute;
@@ -60,7 +82,8 @@ body {
 .score-container .score {
   color: white;
   font-size: 8vh;
-  font-family: arial, helvetica, sans serif;
+  font-family: 'Exo', sans-serif;
+  font-weight: 900;
 }
 .lives-container {
   position: absolute;

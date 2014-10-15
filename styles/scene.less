@@ -41,10 +41,20 @@ html, body {
   height: 30px;
   .firepower-meter {
     display: block;
+    position: relative;
     border-radius: 5px;
     width: 300px;
     height: 30px;
     background: linear-gradient(to right, rgba(170,34,34,1) 0%,rgba(232,131,37,1) 21%,rgba(0,226,7,1) 60%, rgb(255, 255, 255) 87%); /* W3C */
+    span {
+      position: absolute;
+      .title-font();
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.62);
+      font-size: 27px;
+      top: -2px;
+      left: 10px;
+    }
   }
 }
 
@@ -53,12 +63,20 @@ html, body {
   position: absolute;
   width: 100%;
   margin-top: 40vh;
+  .title-font();
   color: white;
-  font-size: 12vh;
   text-align: center;
-  font-family: arial, helvetica, sans serif;
   text-transform: uppercase;
   transition: opacity 0.5s;
+  &.visible {
+    opacity: 0.8;
+  }
+  .title {
+    font-size: 12vh;
+  }
+  .subtitle {
+    font-size: 8vh;
+  }
 }
 
 .score-container {
@@ -68,7 +86,8 @@ html, body {
   .score {
     color: white;
     font-size: 8vh;
-    font-family: arial, helvetica, sans serif;
+    font-family: @title-font;
+    font-weight: 900;
   }
 }
 

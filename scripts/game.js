@@ -1,21 +1,45 @@
 /**
+ * Globals
+ */
+var ship,
+    track,
+    hit,
+    score = 0,
+    lives = 3,
+    keysDown = [],
+    gameStarted = false,
+    shipStartingX = 2000,
+    shipStartingY = 5000;
+
+
+
+init();
+
+/**
  * Initialize
  */
-var ship = new Ship(
-    document.querySelector('.ship-container'),
-    document.documentElement.clientWidth,
-    document.documentElement.clientHeight);
-var track = new Track(document.querySelector('.midground'));
-var hit, missedAlienCount, score = 0, lives = 3;
-var keysDown = [];
+function init() {
+    ship = new Ship(document.querySelector('.ship-container'),
+                    document.documentElement.clientWidth,
+                    document.documentElement.clientHeight);
+    ship.y = shipStartingY;
+    ship.x = shipStartingX;
+    track = new Track(document.querySelector('.midground'));
 
-display.setAnnouncerElement(document.querySelector('.announcement'));
-display.setFirepowerElement(document.querySelector('.firepower-meter-container'));
-display.setScoreElement(document.querySelector('.score'));
-display.setLivesElement(document.querySelector('.lives-container'));
-shotFactory.setTemplate(document.querySelector('.shot'));
-alienFactory.setTemplate(document.querySelector('.alien-container'));
-levelPlayer.setLevel(levelData);
+    display.setAnnouncerElement(document.querySelector('.announcement'));
+    display.setFirepowerElement(document.querySelector('.firepower-meter-container'));
+    display.setScoreElement(document.querySelector('.score'));
+    display.setLivesElement(document.querySelector('.lives-container'));
+    shotFactory.setTemplate(document.querySelector('.shot'));
+    alienFactory.setTemplate(document.querySelector('.alien-container'));
+    levelPlayer.setLevel(levelData);
+
+    window.requestAnimationFrame(tick);
+}
+
+function start() {
+    gameStarted = true;
+}
 
 /**
  * Game loop
@@ -23,40 +47,41 @@ levelPlayer.setLevel(levelData);
 function tick(timestamp) {
     var event;
 
-    if (0 < keysDown.length) {
-        if (keysDown.indexOf(39) !== -1) {
-            ship.moveLeft();
+    if (gameStarted) {
+        if (0 < keysDown.length) {
+            if (keysDown.indexOf(39) !== -1) {
+                ship.moveLeft();
+            }
+            if (keysDown.indexOf(37) !== -1) {
+                ship.moveRight();
+            }
+            if (keysDown.indexOf(38) !== -1) {
+                ship.moveUp();
+            }
+            if (keysDown.indexOf(40) !== -1) {
+                ship.moveDown();
+            }
+            if (keysDown.indexOf(32) !== -1) {
+                shotFactory.create(ship.x, ship.y);
+            }
         }
-        if (keysDown.indexOf(37) !== -1) {
-            ship.moveRight();
-        }
-        if (keysDown.indexOf(38) !== -1) {
-            ship.moveUp();
-        }
-        if (keysDown.indexOf(40) !== -1) {
-            ship.moveDown();
-        }
-        if (keysDown.indexOf(32) !== -1) {
-            shotFactory.create(ship.x, ship.y);
-        }
-    }
 
-    event = levelPlayer.getEvents(timestamp);
+        event = levelPlayer.getEvents(timestamp);
+        alienFactory.spawn(event);
+        display.update(event, shotFactory.firepower(), score);
+    } else {
+        ship.x = shipStartingX;
+        ship.y = shipStartingY;
+    }
 
     ship.updatePosition(timestamp);
     track.update(ship);
     shotFactory.updatePositions(ship, timestamp);
-    alienFactory.spawn(event);
-    missedAlienCount = alienFactory.updatePositions(ship, timestamp);
-    hit = collisionDetector.check(shotFactory.shots(), alienFactory.aliens());
-
-
-
-    display.update(event, shotFactory.firepower(), score);
+    alienFactory.updatePositions(ship, timestamp);
+    collisionDetector.check(shotFactory.shots(), alienFactory.aliens());
 
     window.requestAnimationFrame(tick);
 }
-window.requestAnimationFrame(tick);
 
 /**
  * Event handlers
@@ -77,7 +102,6 @@ document.addEventListener('keyup', function(e) {
 
 document.addEventListener('hit', function(e) {
     score += e.detail * shotFactory.firepower();
-    console.log('hit! ' + new Date().getSeconds());
     levelPlayer.alienRemoved();
 });
 

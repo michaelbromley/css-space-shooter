@@ -2,13 +2,23 @@ function Announcer(el) {
     var self = this;
     self.container = el;
     self.showMessage = function(message) {
-        self.container.innerHTML = message;
-        self.container.style.opacity = 0.8;
+
+        setTitle(message.title);
+        setSubtitle(message.subtitle);
+        self.container.classList.add('visible');
 
         setTimeout(function() {
-            self.container.style.opacity = 0;
+            self.container.classList.remove('visible');
         }, 2000);
     };
+
+    function setTitle(title) {
+        self.container.querySelector('.title').innerHTML = (typeof title === 'undefined') ? '' : title;
+    }
+
+    function setSubtitle(subtitle) {
+        self.container.querySelector('.subtitle').innerHTML = (typeof subtitle === 'undefined') ? '' : subtitle;
+    }
 }
 
 
