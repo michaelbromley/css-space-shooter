@@ -46,7 +46,7 @@ function Alien(el, x, y, config) {
             destroy();
         }
 
-        if (500 < self.z) {
+        if (500 < self.z && self.hit === false) {
             emitMissEvent();
         }
 
