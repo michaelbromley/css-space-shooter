@@ -22,6 +22,14 @@ body {
   left: 50%;
   transform-style: preserve-3d;
 }
+.overlay {
+  position: absolute;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
 .firepower-meter-container {
   position: absolute;
   opacity: 0.5;
@@ -31,6 +39,10 @@ body {
   overflow: hidden;
   width: 300px;
   height: 30px;
+  transition: transform 0.5s 4s;
+}
+.firepower-meter-container.hidden {
+  transform: translateX(-500px);
 }
 .firepower-meter-container .firepower-meter {
   display: block;
@@ -78,6 +90,10 @@ body {
   position: absolute;
   bottom: 10px;
   right: 10px;
+  transition: transform 0.5s 4s;
+}
+.score-container.hidden {
+  transform: translateX(500px);
 }
 .score-container .score {
   color: white;
@@ -87,11 +103,15 @@ body {
 }
 .lives-container {
   position: absolute;
-  bottom: 75px;
+  bottom: 80px;
   right: 15px;
+  transition: transform 0.5s 4.2s;
+}
+.lives-container.hidden {
+  transform: translateX(500px);
 }
 .lives-container .life {
-  font-size: 60px;
+  font-size: 45px;
   color: white;
   display: inline-block;
   opacity: 0.7;
@@ -99,6 +119,45 @@ body {
 }
 .lives-container .life.hidden {
   opacity: 0;
+}
+@keyframes flash {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.title-screen-container {
+  position: absolute;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  transition: transform 5s;
+}
+.title-screen-container.hidden {
+  transform: translateY(1500px);
+}
+.title-screen-container .title-container {
+  text-align: center;
+  font-family: 'Exo', sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  margin-top: 10vh;
+  font-size: 10vh;
+  color: white;
+}
+.title-screen-container .instructions {
+  text-align: center;
+  font-family: 'Exo', sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  color: white;
+}
+.title-screen-container .start-sign {
+  animation: flash 1s infinite;
 }
 @keyframes spin {
   0% {

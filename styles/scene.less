@@ -30,6 +30,16 @@ html, body {
 
 }
 
+
+.overlay {
+  position: absolute;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
 .firepower-meter-container {
   position: absolute;
   opacity: 0.5;
@@ -39,6 +49,10 @@ html, body {
   overflow: hidden;
   width: 300px;
   height: 30px;
+  transition: transform 0.5s 4s;
+  &.hidden {
+    transform: translateX(-500px);
+  }
   .firepower-meter {
     display: block;
     position: relative;
@@ -83,6 +97,10 @@ html, body {
   position: absolute;
   bottom: 10px;
   right: 10px;
+  transition: transform 0.5s 4s;
+  &.hidden {
+    transform: translateX(500px);
+  }
   .score {
     color: white;
     font-size: 8vh;
@@ -93,18 +111,55 @@ html, body {
 
 .lives-container {
   position: absolute;
-  bottom: 75px;
+  bottom: 80px;
   right: 15px;
+  transition: transform 0.5s 4.2s;
+  &.hidden {
+    transform: translateX(500px);
+  }
   .life {
-    font-size: 60px;
+    font-size: 45px;
     color: white;
     display: inline-block;
     opacity: 0.7;
     transition: opacity 1s;
-
     &.hidden {
       opacity: 0;
     }
+  }
+}
+
+@keyframes flash {
+  0% { opacity: 0 }
+  100% { opacity: 1 }
+}
+
+.title-screen-container {
+  position: absolute;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  transition: transform 5s;
+  &.hidden {
+    transform: translateY(1500px);
+  }
+
+  .title-container {
+    text-align: center;
+    .title-font();
+    margin-top: 10vh;
+    font-size: 10vh;
+    color: white;
+  }
+  .instructions {
+    text-align: center;
+    .title-font();
+    color: white;
+  }
+  .start-sign {
+    animation: flash 1s infinite;
   }
 }
 

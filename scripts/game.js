@@ -8,13 +8,8 @@ var ship,
     lives = 3,
     keysDown = [],
     gameStarted = false,
-    shipStartingX = 2000,
-    shipStartingY = 5000;
-
-
-
-init();
-start();
+    shipStartingX = 3000,
+    shipStartingY = 6000;
 
 /**
  * Initialize
@@ -40,6 +35,8 @@ function init() {
 
 function start() {
     gameStarted = true;
+
+    display.showAll();
 }
 
 /**

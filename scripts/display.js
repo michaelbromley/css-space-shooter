@@ -42,6 +42,18 @@ var display = (function() {
         livesContainer = el;
     };
 
+    module.hideAll = function() {
+        firepowerContainer.classList.add('hidden');
+        score.parentElement.classList.add('hidden');
+        livesContainer.classList.add('hidden');
+    };
+
+    module.showAll = function() {
+        firepowerContainer.classList.remove('hidden');
+        score.parentElement.classList.remove('hidden');
+        livesContainer.classList.remove('hidden');
+    };
+
     module.update = function(event, firepower, newScore) {
         if (event.type && event.type === 'announcement') {
             announcer.showMessage(event.data);

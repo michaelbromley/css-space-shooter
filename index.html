@@ -6,7 +6,6 @@
     <link href='http://fonts.googleapis.com/css?family=Exo:400,900italic' rel='stylesheet' type='text/css'>
     <script src="vendor/prefixfree.min.js"></script>
     <link rel="stylesheet" href="styles/scene.css">
-    <link rel="stylesheet" href="styles/page.css">
 </head>
 <body>
 
@@ -63,20 +62,36 @@
 
 </div>
 
-<div class="firepower-meter-container">
-    <span class="firepower-meter"><span>Firepower</span></span>
-</div>
-<div class="announcement">
-    <div class="title"></div>
-    <div class="subtitle"></div>
-</div>
-<div class="score-container">
-    <div class="score"></div>
-</div>
-<div class="lives-container">
-    <div class="life">&#9734;</div>
-    <div class="life">&#9734;</div>
-    <div class="life">&#9734;</div>
+
+<div class="overlay">
+    <div class="firepower-meter-container hidden">
+        <span class="firepower-meter"><span>Firepower</span></span>
+    </div>
+    <div class="announcement">
+        <div class="title"></div>
+        <div class="subtitle"></div>
+    </div>
+    <div class="score-container hidden">
+        <div class="score"></div>
+    </div>
+    <div class="lives-container hidden">
+        <div class="life">&#9734;</div>
+        <div class="life">&#9734;</div>
+        <div class="life">&#9734;</div>
+    </div>
+
+    <div class="title-screen-container">
+        <div class="title-container">
+            <div class="line1">CSS</div>
+            <div class="line1">Space</div>
+            <div class="line1">Shooter</div>
+        </div>
+        <div class="instructions">
+            <p>Use the arrow keys to steer, and space bar to shoot.</p>
+            <p>Don't let any aliens get past you!</p>
+            <h3 class="start-sign">Press space to start!</h3>
+        </div>
+    </div>
 </div>
 
 <script src="scripts/noise.js"></script>
@@ -88,5 +103,6 @@
 <script src="scripts/track.js"></script>
 <script src="scripts/display.js"></script>
 <script src="scripts/game.js"></script>
+<script src="scripts/controller.js"></script>
 </body>
 </html>

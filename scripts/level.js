@@ -95,16 +95,16 @@ var ALIEN_CLASS = {
 var levelData = [
     {
         events: [
-            { time: 0, type: 'spawn', data: [ALIEN_CLASS.stationary] },
-            { time: 1, type: 'announcement', data: { title: 'Stage 1', subtitle: 'Warm-up!'} },
-            { time: 4, type: 'spawn', data: [ALIEN_CLASS.stationary] },
-            { time: 8, type: 'spawn', data: [ALIEN_CLASS.stationary] },
+            { time: 2, type: 'announcement', data: { title: 'Stage 1', subtitle: 'Warm-up!'} },
+            { time: 3, type: 'spawn', data: [ALIEN_CLASS.stationary] },
+            { time: 6, type: 'spawn', data: [ALIEN_CLASS.stationary] },
+            { time: 9, type: 'spawn', data: [ALIEN_CLASS.stationary] },
             { time: 12, type: 'spawn', data: [ALIEN_CLASS.stationary, ALIEN_CLASS.stationary] }
         ]
     },
     {
         events: [
-            { time: 0, type: 'announcement', data: {title: 'Stage 2'} },
+            { time: 2, type: 'announcement', data: {title: 'Stage 2'} },
             { time: 3, type: 'spawn', data: [ALIEN_CLASS.vertical] },
             { time: 6, type: 'spawn', data: [ALIEN_CLASS.horizontal] },
             { time: 9, type: 'spawn', data: [ALIEN_CLASS.vertical, ALIEN_CLASS.stationary]},
@@ -114,11 +114,12 @@ var levelData = [
     },
     {
         events: [
-            { time: 1, type: 'announcement', data: { title: 'Stage 3', subtitle: 'Spirals!'} },
+            { time: 2, type: 'announcement', data: { title: 'Stage 3', subtitle: 'Spirals!'} },
             { time: 3, type: 'spawn', data: [ALIEN_CLASS.spiral] },
             { time: 7, type: 'spawn', data: [ALIEN_CLASS.spiral] },
             { time: 11, type: 'spawn', data: [ALIEN_CLASS.spiral] },
-            { time: 16, type: 'spawn', data: [ALIEN_CLASS.spiral, ALIEN_CLASS.spiral] }
+            { time: 15, type: 'spawn', data: [ALIEN_CLASS.spiral] },
+            { time: 16, type: 'spawn', data: [ALIEN_CLASS.spiral] }
         ]
     }
 ];
