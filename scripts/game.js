@@ -14,6 +14,7 @@ var ship,
 
 
 init();
+start();
 
 /**
  * Initialize
