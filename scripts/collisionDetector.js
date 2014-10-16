@@ -8,8 +8,8 @@ var collisionDetector = (function() {
     var screenHeight = document.documentElement.clientHeight;
     // dimensions of the alien's collision bounding box
     var alienBBZ = 100;
-    var alienBBX = screenWidth * 0.07;
-    var alienBBY = screenHeight * 0.07;
+    var alienBBX = screenWidth * 0.01;
+    var alienBBY = screenHeight * 0.01;
 
     module.check = function(shots, aliens) {
         aliens.forEach(function(alien) {
@@ -28,12 +28,21 @@ var collisionDetector = (function() {
     };
 
     function collision(alien, shot) {
+        var bbXScaled, bbYScaled;
+
         if (Math.abs(shot.z - alien.z) < alienBBZ) {
-            if (Math.abs(shot.x - alien.x) < alienBBX && Math.abs(shot.y - alien.y) < alienBBY) {
+            bbXScaled = scaleBoundingBox(alienBBX, alien.z);
+            bbYScaled = scaleBoundingBox(alienBBY, alien.z);
+            if (Math.abs(shot.x - alien.actualX) < bbXScaled && Math.abs(shot.y - alien.actualY) < bbYScaled) {
                 return true;
             }
         }
         return false;
+    }
+
+    function scaleBoundingBox(originalValue, zPosition) {
+        var multiplier = (zPosition + 15000) / 1500;
+        return originalValue * (1 + multiplier);
     }
 
     function emitHitEvent() {
