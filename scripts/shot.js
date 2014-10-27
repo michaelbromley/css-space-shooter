@@ -2,7 +2,7 @@
 function Shot(el, x, y) {
     var self = this;
     var range = 15000; // how far into the distance before it disappears
-    var speed = 10000; // distance (in pixels) travelled in 1 second;
+    var speed = 5000; // distance (in pixels) travelled in 1 second;
     self.lastTimestamp = null;
     self.el = el;
     self.x = x;
@@ -30,7 +30,8 @@ function Shot(el, x, y) {
         self.el.style.transform =
             'translateY(' + (self.y + offsetY) + 'px) ' +
             'translateX(' + (self.x + offsetX) + 'px) ' +
-            'translateZ(' + self.z + 'px) ';
+            'translateZ(' + self.z + 'px) ' +
+            'rotateX(90deg)';
         self.el.style.opacity = opacity;
         return self.z < -range || self.hit;
     };
@@ -47,14 +48,36 @@ var shotFactory = (function() {
             shotElement = el.cloneNode(false);
             shotElement.style.display = 'block';
         },
-        create: function(x, y) {
+        create: function(ship) {
             if (0 < Math.round(firepower)) {
                 throttle(function () {
-                    var newElement = shotElement.cloneNode(false);
-                    document.querySelector('.scene').appendChild(newElement);
-                    shots.push(new Shot(newElement, x, y));
+
+                    if (5 < firepower) {
+                        var spread = document.documentElement.clientWidth * 0.03;
+                        var shotL = {
+                            x: ship.x - spread * Math.cos(ship.ry * (Math.PI/180)),
+                            y: ship.y - Math.tan(ship.ry * (Math.PI/180)) * spread
+                        };
+                        var shotR = {
+                            x: ship.x + spread * Math.cos(ship.ry * (Math.PI/180)),
+                            y: ship.y + Math.tan(ship.ry * (Math.PI/180)) * spread
+                        };
+
+                        var shotLeftElement = shotElement.cloneNode(false);
+                        document.querySelector('.scene').appendChild(shotLeftElement);
+                        shots.push(new Shot(shotLeftElement, shotL.x, shotL.y));
+                        var shotRightElement = shotElement.cloneNode(false);
+                        document.querySelector('.scene').appendChild(shotRightElement);
+                        shots.push(new Shot(shotRightElement, shotR.x, shotR.y));
+
+                    } else {
+                        var newElement = shotElement.cloneNode(false);
+                        document.querySelector('.scene').appendChild(newElement);
+                        shots.push(new Shot(newElement, ship.x, ship.y));
+                    }
                     firepower --;
-                }, 100);
+
+                }, 150);
             }
         },
         updatePositions: function(ship, timestamp) {

@@ -4,7 +4,7 @@ function Ship(containerElement, fieldWidth, fieldHeight) {
     // Constants
     var A = 50; // acceleration factor
     var D = 200; // deceleration factor
-    var AA = 70; // angular acceleration factor
+    var AA = 100; // angular acceleration factor
     var AD = 130; // angular deceleration factor
     var MAX_V = 500; // maximum permitted linear velocity
     var MAX_AV = 200; // maximum permitted angular acceleration
@@ -39,23 +39,23 @@ function Ship(containerElement, fieldWidth, fieldHeight) {
     self.moveLeft = function () {
         self.vx += A;
         self.vry += AA;
-        self.vrz += AA;
+        self.vrz += AA/2;
     };
 
     self.moveRight = function () {
         self.vx-= A;
         self.vry -= AA;
-        self.vrz -= AA;
+        self.vrz -= AA/2;
     };
 
     self.moveUp = function () {
         self.vy -= A;
-        self.vrx -= AA;
+        self.vrx -= AA/1.3;
     };
 
     self.moveDown = function () {
         self.vy += A;
-        self.vrx += AA;
+        self.vrx += AA/1.3;
     };
 
     self.updatePosition = function(timestamp) {

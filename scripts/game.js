@@ -8,6 +8,7 @@ var ship,
     lives = 3,
     keysDown = [],
     gameStarted = false,
+    gamePaused = false,
     shipStartingX = 3000,
     shipStartingY = 6000;
 
@@ -16,8 +17,8 @@ var ship,
  */
 function init() {
     ship = new Ship(document.querySelector('.ship-container'),
-                    document.documentElement.clientWidth,
-                    document.documentElement.clientHeight);
+        document.documentElement.clientWidth,
+        document.documentElement.clientHeight);
     ship.y = shipStartingY;
     ship.x = shipStartingX;
     track = new Track(document.querySelector('.midground'));
@@ -37,6 +38,8 @@ function start() {
     gameStarted = true;
 
     display.showAll();
+
+    setTimeout(track.show, 3000);
 }
 
 /**
@@ -60,7 +63,7 @@ function tick(timestamp) {
                 ship.moveDown();
             }
             if (keysDown.indexOf(32) !== -1) {
-                shotFactory.create(ship.x, ship.y);
+                shotFactory.create(ship);
             }
         }
 
@@ -71,6 +74,7 @@ function tick(timestamp) {
         ship.x = shipStartingX;
         ship.y = shipStartingY;
     }
+
 
     ship.updatePosition(timestamp);
     track.update(ship);
