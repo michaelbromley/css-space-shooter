@@ -1,14 +1,27 @@
+@import "vars";
 
 .shot {
   display: none;
   position: absolute;
   z-index: 25;
-  width: 10px;
-  height: 10px;
+  width: @scale * 1;
+  height: @scale * 10;
+  margin-top: -@scale * 5;
   border-radius: 50%;
-  background-color: #fff;
-  box-shadow:
-          0 0 30px 15px #fff,  /* inner white */
-          0 0 50px 30px rgba(255, 0, 255, 0.62), /* middle magenta */
-          0 0 70px 45px rgba(0, 255, 255, 0.53); /* outer cyan */
+  background-color: rgb(255, 255, 255, 0.8);
+  border: @scale solid rgba(11, 0, 255, 0.5);
+  /*box-shadow:
+          0 0 30px 15px #fff,  *//* inner white *//*
+          0 0 50px 30px rgba(255, 0, 255, 0.62), *//* middle magenta *//*
+          0 0 70px 45px rgba(0, 255, 255, 0.53); *//* outer cyan */
+  &:after {
+    position: absolute;
+    content: '';
+    width: @scale * 2;
+    height: @scale * 2;
+    background-color: rgba(156, 148, 255, 0.50);
+    border-radius: 50%;
+    margin-left: -@scale + @scale/2;
+    transform: rotateX(90deg);
+  }
 }

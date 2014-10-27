@@ -23,7 +23,7 @@
   border: @alien-border-width solid @orange;
   .alien-box-shadow(@orange);
   background-color: @alien-fill-color;
-  transition: box-shadow 0.5s, opacity 0.5s 0.2s;
+  transition: border-width 0.7s, opacity 0.5s 0.2s;
 }
 .red .alien, .red .mouth:before, .red .mouth:after {
   border: @alien-border-width solid #ff2e53;
@@ -43,8 +43,9 @@
 }
 
 .hit .alien {
-  box-shadow: inset 0 0 10px lighten(@orange, 30%), 0px 0px 100px 50px lighten(@orange, 30%);
+  //box-shadow: inset 0 0 10px lighten(@orange, 30%), 0px 0px 100px 50px lighten(@orange, 30%);
   border-color: white;
+  border-width: @scale * 2;
   opacity: 0;
 }
 
