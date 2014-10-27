@@ -96,30 +96,62 @@ var levelData = [
     {
         events: [
             { time: 2, type: 'announcement', data: { title: 'Stage 1', subtitle: 'Warm-up!'} },
-            { time: 3, type: 'spawn', data: [ALIEN_CLASS.stationary] },
-            { time: 6, type: 'spawn', data: [ALIEN_CLASS.stationary] },
-            { time: 9, type: 'spawn', data: [ALIEN_CLASS.stationary] },
-            { time: 12, type: 'spawn', data: [ALIEN_CLASS.stationary, ALIEN_CLASS.stationary] }
+            { time: 3, type: 'spawn', data: [
+                { class: ALIEN_CLASS.stationary, speed: 1 }
+            ] },
+            { time: 7, type: 'spawn', data: [
+                { class: ALIEN_CLASS.stationary, speed: 1 }
+            ] },
+            { time: 11, type: 'spawn', data: [
+                { class: ALIEN_CLASS.stationary, speed: 1 }
+            ] },
+            { time: 16, type: 'spawn', data: [
+                { class: ALIEN_CLASS.stationary, speed: 1 },
+                { class: ALIEN_CLASS.stationary, speed: 1 }
+            ] }
         ]
     },
     {
         events: [
             { time: 2, type: 'announcement', data: {title: 'Stage 2'} },
-            { time: 3, type: 'spawn', data: [ALIEN_CLASS.vertical] },
-            { time: 6, type: 'spawn', data: [ALIEN_CLASS.horizontal] },
-            { time: 9, type: 'spawn', data: [ALIEN_CLASS.vertical, ALIEN_CLASS.stationary]},
-            { time: 13, type: 'spawn', data: [ALIEN_CLASS.horizontal, ALIEN_CLASS.stationary]},
-            { time: 17, type: 'spawn', data: [ALIEN_CLASS.vertical, ALIEN_CLASS.horizontal]}
+            { time: 3, type: 'spawn', data: [
+                { class: ALIEN_CLASS.vertical, speed: 1 }
+            ] },
+            { time: 6, type: 'spawn', data: [
+                { class: ALIEN_CLASS.horizontal, speed: 1 }
+            ] },
+            { time: 9, type: 'spawn', data: [
+                { class: ALIEN_CLASS.vertical, speed: 1 },
+                { class: ALIEN_CLASS.stationary, speed: 1 }
+            ] },
+            { time: 13, type: 'spawn', data: [
+                { class: ALIEN_CLASS.horizontal, speed: 1 },
+                { class: ALIEN_CLASS.stationary, speed: 1 }
+            ] },
+            { time: 17, type: 'spawn', data: [
+                { class: ALIEN_CLASS.vertical, speed: 1.5 },
+                { class: ALIEN_CLASS.horizontal, speed: 1.5 }
+            ] }
         ]
     },
     {
         events: [
             { time: 2, type: 'announcement', data: { title: 'Stage 3', subtitle: 'Spirals!'} },
-            { time: 3, type: 'spawn', data: [ALIEN_CLASS.spiral] },
-            { time: 7, type: 'spawn', data: [ALIEN_CLASS.spiral] },
-            { time: 11, type: 'spawn', data: [ALIEN_CLASS.spiral] },
-            { time: 15, type: 'spawn', data: [ALIEN_CLASS.spiral] },
-            { time: 16, type: 'spawn', data: [ALIEN_CLASS.spiral] }
+            { time: 3, type: 'spawn', data: [
+                { class: ALIEN_CLASS.spiral, speed: 1 }
+            ] },
+            { time: 7, type: 'spawn', data: [
+                { class: ALIEN_CLASS.spiral, speed: 1 }
+            ] },
+            { time: 11, type: 'spawn', data: [
+                { class: ALIEN_CLASS.spiral, speed: 1 }
+            ] },
+            { time: 15, type: 'spawn', data: [
+                { class: ALIEN_CLASS.spiral, speed: 2 }
+            ] },
+            { time: 16, type: 'spawn', data: [
+                { class: ALIEN_CLASS.spiral, speed: 2 }
+            ] }
         ]
     }
 ];
