@@ -68,6 +68,11 @@ function tick(timestamp) {
         }
 
         event = levelPlayer.getEvents(timestamp);
+
+        if (lives === 0) {
+            event = { type: 'announcement', data: { title: 'You Died!', subtitle: 'Better luck next time!!!!'}};
+        }
+
         alienFactory.spawn(event);
         display.update(event, shotFactory.firepower(), score);
     } else {

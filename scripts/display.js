@@ -58,6 +58,7 @@ var display = (function() {
         if (event.type && event.type === 'announcement') {
             announcer.showMessage(event.data);
         }
+        
         firepowerContainer.style.width = (firepower * 30) + 'px';
         score.innerHTML = Math.round(newScore);
     };

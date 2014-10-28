@@ -7,7 +7,12 @@
  */
 var levelPlayer = (function() {
     var module = {};
-    var startTime, levelData, secondsElapsed, activeAliens = 0, currentStageIndex = 0;
+    var startTime,
+        levelData,
+        secondsElapsed,
+        activeAliens = 0,
+        currentStageIndex = 0,
+        levelCompleted = false;
 
     module.setLevel = function(level) {
         levelData = level;
@@ -35,9 +40,13 @@ var levelPlayer = (function() {
 
     function getCurrentStage(timestamp) {
         if (allStageEventsFired() && activeAliens === 0) {
-            currentStageIndex ++;
-            activeAliens = 0;
-            startTime = timestamp;
+            if (currentStageIndex < levelData.length - 1) {
+                currentStageIndex++;
+                activeAliens = 0;
+                startTime = timestamp;
+            } else {
+                levelCompleted = true;
+            }
         }
         return levelData[currentStageIndex];
     }
@@ -50,19 +59,26 @@ var levelPlayer = (function() {
     function getEventAtTime(secondsElapsed, currentStage) {
         var e, event;
 
-        for (e = 0; e < currentStage.events.length; e++) {
-            event = currentStage.events[e];
+        if (!levelCompleted) {
+            for (e = 0; e < currentStage.events.length; e++) {
+                event = currentStage.events[e];
 
-            if (event.time === secondsElapsed) {
-                if (!event.fired) {
-                    event.fired = true;
-                    setActiveAliens(event);
-                    return event;
+                if (event.time === secondsElapsed) {
+                    if (!event.fired) {
+                        event.fired = true;
+                        setActiveAliens(event);
+                        return event;
+                    }
                 }
             }
+            return {};
+        } else {
+            // return level complete event
+            return {
+                type: 'announcement',
+                data: { title: "Congratulations!", subtitle: "You won!" }
+            };
         }
-
-        return [];
     }
 
     function setActiveAliens(event) {
