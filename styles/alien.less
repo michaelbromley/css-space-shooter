@@ -42,11 +42,31 @@
   .alien-box-shadow(white);
 }
 
-.hit .alien {
-  //box-shadow: inset 0 0 10px lighten(@orange, 30%), 0px 0px 100px 50px lighten(@orange, 30%);
-  border-color: white;
-  border-width: @scale * 2;
-  opacity: 0;
+.alien-container.hit {
+
+  &>.alien {
+    border-color: white;
+    border-width: @scale * 2;
+    opacity: 0;
+    animation: rotate 0.8s infinite;
+  }
+
+  .arm-container {
+    .arm {
+      border-color: white;
+      border-width: @scale * 2;
+      opacity: 0;
+      &.left {
+        transform: translateZ(-10px) rotateZ(-120deg) translateY(@scale * 20) rotateX(50deg);
+      }
+      &.right {
+        transform: translateZ(-10px) rotateZ(120deg) translateY(@scale * 20) rotateX(50deg);
+      }
+      &.bottom {
+        transform: translateZ(-10px) translateY(g@scale * 20) rotateX(50deg);
+      }
+    }
+  }
 }
 
 @body-width: 7 * @scale;
@@ -120,6 +140,7 @@
 .arm {
   width: @arm-width;
   height: @arm-height;
+  transition: transform 1.5s, border-width 0.7s, opacity 0.5s 0.2s;
 
   &.left {
     transform-origin: top center;
