@@ -8,7 +8,9 @@ function loadSounds(callback) {
         [
             'assets/sfx/gun.mp3',
             'assets/sfx/ship_drone.mp3',
-            'assets/sfx/explosion.mp3'
+            'assets/sfx/explosion.mp3',
+            'assets/sfx/alien.mp3',
+            'assets/sfx/alien_drone.mp3'
         ],
         finishedLoading
     );
@@ -20,6 +22,8 @@ function loadSounds(callback) {
         var sfxGun = new Sound(bufferList[0], context);
         var sfxShip = new Sound(bufferList[1], context);
         var sfxExplosion = new Sound(bufferList[2], context);
+        var sfxAlien = new Sound(bufferList[3], context);
+        sfxAlien.setGain(2);
 
         sfxGun.setPannerParameters({
             coneOuterGain: 0.9,
@@ -35,7 +39,7 @@ function loadSounds(callback) {
             coneInnerAngle: 0,
             rolloffFactor: 0.3
         });
-        sfxShip.setGain(3);
+        sfxShip.setGain(2.5);
 
         var sfx = {
             gun: {
@@ -74,6 +78,34 @@ function loadSounds(callback) {
                     z /= 1000;
                     sfxExplosion.setPosition(x, y, z);
                     sfxExplosion.play();
+                }
+            },
+            alien: {
+                play: function(x, y, z) {
+                    x /= 100;
+                    y /= 100;
+                    z /= 1000;
+                    sfxAlien.setPosition(x, y, z);
+                    sfxAlien.play();
+                }
+            },
+            alienDrone: {
+                create: function() {
+                    var sfxAlienDrone = new Sound(bufferList[4], context);
+                    sfxAlienDrone.setPannerParameters({
+                        coneOuterGain: 0.1,
+                        coneOuterAngle: 90,
+                        coneInnerAngle: 0,
+                        rolloffFactor: 2
+                    });
+                    sfxAlienDrone.play(true);
+                    return sfxAlienDrone;
+                },
+                setParameters: function(sound, x, y, z) {
+                    x /= 100;
+                    y /= 100;
+                    z /= 1000;
+                    sound.setPosition(x, y, z);
                 }
             }
         };
@@ -121,17 +153,21 @@ function Sound(buffer, context) {
 
     this.play = function(loop) {
         loop = loop || false;
-        var source = this.context.createBufferSource();
-        source.buffer = this.buffer;
-        source.playbackRate.value = this.playbackRate;
+        this.source = this.context.createBufferSource();
+        this.source.buffer = this.buffer;
+        this.source.playbackRate.value = this.playbackRate;
         if (loop) {
-            source.loop = true;
+            this.source.loop = true;
         }
-        source.connect(this.gain);
+        this.source.connect(this.gain);
         this.gain.connect(this.panner);
         this.panner.connect(this.context.destination);
-        source.start();
-    }
+        this.source.start();
+    };
+
+    this.stop = function() {
+        this.source.stop();
+    };
 }
 
 

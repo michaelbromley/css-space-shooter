@@ -122,7 +122,8 @@ var alienFactory = (function() {
             // remove any aliens that have made it past the player
             for(i = aliensToRemove.length - 1; i >= 0; --i) {
                 el = aliens[aliensToRemove[i]].el;
-                aliens.splice(aliensToRemove[i], 1);
+                var removedAliens = aliens.splice(aliensToRemove[i], 1);
+                removedAliens[0].sound.stop();
                 document.querySelector('.scene').removeChild(el);
             }
 

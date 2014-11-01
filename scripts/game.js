@@ -89,6 +89,21 @@ function tick(timestamp) {
         display.update(event, shotFactory.firepower(), score);
 
         sfx.ship.setParameters(ship.x, ship.y, ship.vx, ship.vy);
+        // randomly make alien noises
+        if (Math.random() < 0.001) {
+            var aliens = alienFactory.aliens();
+            if (0 < aliens.length) {
+                var alien = aliens[Math.floor(Math.random() * aliens.length)];
+                sfx.alien.play(alien.x, alien.y, alien.z);
+            }
+        }
+        // update alien drone noises and add the sfx if not already there
+        alienFactory.aliens().forEach(function(alien) {
+            if (typeof alien.sound === 'undefined') {
+                alien.sound = sfx.alienDrone.create();
+            }
+            sfx.alienDrone.setParameters(alien.sound, alien.x, alien.y, alien.z);
+        })
 
     } else {
         ship.x = shipStartingX;

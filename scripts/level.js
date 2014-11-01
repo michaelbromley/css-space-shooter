@@ -110,6 +110,14 @@ var ALIEN_CLASS = {
  */
 var levelData = [
     {
+            events: [
+                { time: 2, type: 'announcement', data: { title: 'Stage 0', subtitle: 'test!'} },
+                { time: 3, type: 'spawn', data: [
+                    { class: ALIEN_CLASS.stationary, speed: 1 }
+                ] }
+            ]
+        },
+    {
         events: [
             { time: 2, type: 'announcement', data: { title: 'Stage 1', subtitle: 'Warm-up!'} },
             { time: 3, type: 'spawn', data: [
