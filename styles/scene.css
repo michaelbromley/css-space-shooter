@@ -519,10 +519,25 @@ body {
   border: 0.15vw solid #ffffff;
   box-shadow: inset 0 0 10px #ffffff, 0px 0px 10px 0px #ffffff;
 }
-.hit .alien {
+.alien-container.hit > .alien {
   border-color: white;
   border-width: 2vw;
   opacity: 0;
+  animation: rotate 0.8s infinite;
+}
+.alien-container.hit .arm-container .arm {
+  border-color: white;
+  border-width: 2vw;
+  opacity: 0;
+}
+.alien-container.hit .arm-container .arm.left {
+  transform: translateZ(-10px) rotateZ(-120deg) translateY(20vw) rotateX(50deg);
+}
+.alien-container.hit .arm-container .arm.right {
+  transform: translateZ(-10px) rotateZ(120deg) translateY(20vw) rotateX(50deg);
+}
+.alien-container.hit .arm-container .arm.bottom {
+  transform: translateZ(-10px) translateY(g 20vw) rotateX(50deg);
 }
 .body {
   width: 7vw;
@@ -589,6 +604,7 @@ body {
 .arm {
   width: 0.5vw;
   height: 15vw;
+  transition: transform 1.5s, border-width 0.7s, opacity 0.5s 0.2s;
 }
 .arm.left {
   transform-origin: top center;

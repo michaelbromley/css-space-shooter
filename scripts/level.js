@@ -129,7 +129,7 @@ var levelData = [
     },
     {
         events: [
-            { time: 2, type: 'announcement', data: {title: 'Stage 2'} },
+            { time: 2, type: 'announcement', data: {title: 'Stage 2', subtitle: 'Ready?' } },
             { time: 3, type: 'spawn', data: [
                 { class: ALIEN_CLASS.vertical, speed: 1 }
             ] },
@@ -167,6 +167,91 @@ var levelData = [
             ] },
             { time: 16, type: 'spawn', data: [
                 { class: ALIEN_CLASS.spiral, speed: 2 }
+            ] }
+        ]
+    },
+    {
+        events: [
+            { time: 2, type: 'announcement', data: { title: 'Stage 4', subtitle: 'Turkey Shoot!'} },
+            { time: 3, type: 'spawn', data: [
+                { class: ALIEN_CLASS.stationary, speed: 1 }
+            ] },
+            { time: 4, type: 'spawn', data: [
+                { class: ALIEN_CLASS.stationary, speed: 1 }
+            ] },
+            { time: 5, type: 'spawn', data: [
+                { class: ALIEN_CLASS.stationary, speed: 1 }
+            ] },
+            { time: 6, type: 'spawn', data: [
+                { class: ALIEN_CLASS.stationary, speed: 1 }
+            ] },
+            { time: 7, type: 'spawn', data: [
+                { class: ALIEN_CLASS.stationary, speed: 1 }
+            ] },
+            { time: 8, type: 'spawn', data: [
+                { class: ALIEN_CLASS.stationary, speed: 1 }
+            ] },
+            { time: 8, type: 'spawn', data: [
+                { class: ALIEN_CLASS.stationary, speed: 1 }
+            ] },
+            { time: 9, type: 'spawn', data: [
+                { class: ALIEN_CLASS.stationary, speed: 1 }
+            ] },
+            { time: 10, type: 'spawn', data: [
+                { class: ALIEN_CLASS.stationary, speed: 1 }
+            ] },
+            { time: 11, type: 'spawn', data: [
+                { class: ALIEN_CLASS.stationary, speed: 1 }
+            ] },
+            { time: 12, type: 'spawn', data: [
+                { class: ALIEN_CLASS.stationary, speed: 1 }
+            ] },
+            { time: 13, type: 'spawn', data: [
+                { class: ALIEN_CLASS.stationary, speed: 1 }
+            ] },
+            { time: 14, type: 'spawn', data: [
+                { class: ALIEN_CLASS.stationary, speed: 1 },
+                { class: ALIEN_CLASS.stationary, speed: 1 }
+            ] },
+            { time: 15, type: 'spawn', data: [
+                { class: ALIEN_CLASS.stationary, speed: 1 },
+                { class: ALIEN_CLASS.stationary, speed: 1 }
+            ] },
+            { time: 16, type: 'spawn', data: [
+                { class: ALIEN_CLASS.stationary, speed: 1 },
+                { class: ALIEN_CLASS.stationary, speed: 1 }
+            ] },
+            { time: 17, type: 'spawn', data: [
+                { class: ALIEN_CLASS.stationary, speed: 1 },
+                { class: ALIEN_CLASS.stationary, speed: 1 }
+            ] },
+            { time: 18, type: 'spawn', data: [
+                { class: ALIEN_CLASS.stationary, speed: 1 },
+                { class: ALIEN_CLASS.stationary, speed: 1 }
+            ] }
+        ]
+    },
+    {
+        events: [
+            { time: 2, type: 'announcement', data: { title: 'Stage 5', subtitle: 'Catch Me If You Can!'} },
+            { time: 3, type: 'spawn', data: [
+                { class: ALIEN_CLASS.random, speed: 3 }
+            ] }
+        ]
+    },
+    {
+        events: [
+            { time: 2, type: 'announcement', data: { title: 'Stage 6', subtitle: 'Let\'s Speed Things Up!' } },
+            { time: 3, type: 'spawn', data: [{ class: ALIEN_CLASS.horizontal, speed: 2 }] },
+            { time: 5, type: 'spawn', data: [{ class: ALIEN_CLASS.vertical, speed: 2 }] },
+            { time: 7, type: 'spawn', data: [{ class: ALIEN_CLASS.spiral, speed: 2 }] },
+            { time: 9, type: 'spawn', data: [{ class: ALIEN_CLASS.stationary, speed: 1 }] },
+            { time: 11, type: 'spawn', data: [{ class: ALIEN_CLASS.vertical, speed: 3 }] },
+            { time: 14, type: 'spawn', data: [{ class: ALIEN_CLASS.horizontal, speed: 3 }] },
+            { time: 17, type: 'spawn', data: [{ class: ALIEN_CLASS.stationary, speed: 1 }] },
+            { time: 20, type: 'spawn', data: [
+                { class: ALIEN_CLASS.spiral, speed: 2 },
+                { class: ALIEN_CLASS.spiral, speed: 3 }
             ] }
         ]
     }

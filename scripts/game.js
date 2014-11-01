@@ -10,7 +10,9 @@ var ship,
     gameStarted = false,
     gamePaused = false,
     shipStartingX = 3000,
-    shipStartingY = 6000;
+    shipStartingY = 6000,
+    sfxGun,
+    sfxShip;
 
 /**
  * Initialize
@@ -31,13 +33,28 @@ function init() {
     alienFactory.setTemplate(document.querySelector('.alien-container'));
     levelPlayer.setLevel(levelData);
 
+    // set up the audio
+    sfxGun = new Sound( "assets/sfx/gun.mp3" );
+    sfxGun.setVolume(0.5);
+    sfxShip = new Sound( "assets/sfx/ship_drone.mp3", true);
+    Sound.setListener( sfxListener );
+    Sound.load();
+
     window.requestAnimationFrame(tick);
+}
+
+function sfxListener(sound, state) {
+
 }
 
 function start() {
     gameStarted = true;
 
     display.showAll();
+
+    sfxShip.play();
+
+    setInterval(setSfxShipPan, 100);
 
     setTimeout(track.show, 3000);
 }
@@ -75,6 +92,8 @@ function tick(timestamp) {
 
         alienFactory.spawn(event);
         display.update(event, shotFactory.firepower(), score);
+
+
     } else {
         ship.x = shipStartingX;
         ship.y = shipStartingY;
@@ -88,6 +107,13 @@ function tick(timestamp) {
     collisionDetector.check(shotFactory.shots(), alienFactory.aliens());
 
     window.requestAnimationFrame(tick);
+}
+
+function setSfxShipPan() {
+    var pan = (ship.x / document.documentElement.clientWidth) * 2;
+    pan = Math.max(Math.min(pan, 1), -1);
+    console.log('ship pan: ' + pan);
+    sfxShip.setPan(pan)
 }
 
 /**
@@ -110,6 +136,13 @@ document.addEventListener('keyup', function(e) {
 document.addEventListener('hit', function(e) {
     score += e.detail * shotFactory.firepower();
     levelPlayer.alienRemoved();
+});
+
+document.addEventListener('shot', function(e) {
+    var windowWidth = document.documentElement.clientWidth;
+    var pan = e.detail.x / windowWidth;
+    sfxGun.play();
+    sfxGun.setPan(pan);
 });
 
 document.addEventListener('miss', function(e) {

@@ -75,6 +75,7 @@ var shotFactory = (function() {
                         document.querySelector('.scene').appendChild(newElement);
                         shots.push(new Shot(newElement, ship.x, ship.y));
                     }
+                    emitShotEvent(ship.x, ship.y);
                     firepower --;
 
                 }, 150);
@@ -108,6 +109,11 @@ var shotFactory = (function() {
             return firepower;
         }
     };
+
+    function emitShotEvent(x, y) {
+        var event = new CustomEvent('shot', { 'detail': {x: x, y: y} });
+        document.dispatchEvent(event);
+    }
 
 })();
 
