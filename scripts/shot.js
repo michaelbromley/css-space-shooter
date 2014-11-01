@@ -52,7 +52,7 @@ var shotFactory = (function() {
             if (0 < Math.round(firepower)) {
                 throttle(function () {
 
-                    if (5 < firepower) {
+                    if (3 < firepower) {
                         var spread = document.documentElement.clientWidth * 0.03;
                         var shotL = {
                             x: ship.x - spread * Math.cos(ship.ry * (Math.PI/180)),
@@ -99,7 +99,7 @@ var shotFactory = (function() {
             }
 
             if (firepower < MAX_FIREPOWER) {
-                firepower += 0.1;
+                firepower += 0.07;
             }
         },
         shots: function() {
@@ -111,7 +111,7 @@ var shotFactory = (function() {
     };
 
     function emitShotEvent(x, y) {
-        var event = new CustomEvent('shot', { 'detail': {x: x, y: y} });
+        var event = new CustomEvent('shot', { 'detail': { firepower: firepower } });
         document.dispatchEvent(event);
     }
 

@@ -18,7 +18,7 @@ var collisionDetector = (function() {
                 if (collision(alien, shot)) {
                     if (!alien.hit) {
                         alien.hit = true;
-                        emitHitEvent();
+                        emitHitEvent(alien);
                     }
                     shot.hit = true;
                 }
@@ -45,8 +45,12 @@ var collisionDetector = (function() {
         return originalValue * (1 + multiplier);
     }
 
-    function emitHitEvent() {
-        var event = new CustomEvent('hit', { 'detail': 100 });
+    function emitHitEvent(alien) {
+        var event = new CustomEvent('hit', { 'detail': {
+            x: alien.x,
+            y: alien.y,
+            z: alien.z
+        } });
         document.dispatchEvent(event);
     }
 
