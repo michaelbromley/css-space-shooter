@@ -22,6 +22,7 @@ function loadSounds(callback) {
         var sfxGun = new Sound(bufferList[0], context);
         var sfxShip = new Sound(bufferList[1], context);
         var sfxExplosion = new Sound(bufferList[2], context);
+        sfxExplosion.setGain(2);
         var sfxAlien = new Sound(bufferList[3], context);
         sfxAlien.setGain(2);
 
@@ -98,13 +99,21 @@ function loadSounds(callback) {
                         coneInnerAngle: 0,
                         rolloffFactor: 2
                     });
+                    sfxAlienDrone.setGain(1.5);
                     sfxAlienDrone.play(true);
                     return sfxAlienDrone;
                 },
-                setParameters: function(sound, x, y, z) {
-                    x /= 100;
-                    y /= 100;
-                    z /= 1000;
+                /**
+                 * We take the alien and the ship as parameters so we can calculate the distance between the two,
+                 * which determines the panning.
+                 * @param sound
+                 * @param alien
+                 * @param ship
+                 */
+                setParameters: function(sound, alien, ship) {
+                    x = (alien.x - ship.x) / 100;
+                    y = (alien.y - ship.y) / 100;
+                    z = alien.z / 1000;
                     sound.setPosition(x, y, z);
                 }
             }
