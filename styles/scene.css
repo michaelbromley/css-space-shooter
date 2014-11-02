@@ -4,6 +4,9 @@ body {
   margin: 0;
   box-sizing: border-box;
 }
+#player {
+  display: none;
+}
 .scene {
   position: absolute;
   top: 0;
