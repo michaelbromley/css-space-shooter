@@ -1,17 +1,34 @@
-function playMusic(trackUrl) {
+var music = (function() {
+    var module = {};
+
     var player =  document.getElementById('player');
     var loader = new SoundcloudLoader(player);
     var audioSource = new SoundCloudAudioSource(player);
 
-    loader.loadStream(trackUrl,
-        function() {
-            audioSource.playStream(loader.streamUrl());
-        },
-        function() {
-            console.log("Error: ", loader.errorMessage);
-        }
-    );
-}
+    module.load = function(trackUrl, callback) {
+        callback = callback || function() {};
+        loader.loadStream(trackUrl,
+            callback,
+            function() {
+                console.log("Error: ", loader.errorMessage);
+            }
+        );
+    };
+
+    module.play = function() {
+        audioSource.playStream(loader.streamUrl());
+    };
+
+    module.pause = function() {
+        player.pause();
+    };
+
+    module.resume = function() {
+        player.play();
+    };
+
+    return module;
+})();
 
 
 
