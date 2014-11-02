@@ -1,126 +1,142 @@
-function loadSounds(callback) {
+var sfx = (function() {
+    var module = {};
+
     // Fix up prefixing
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     var context = new AudioContext();
+    var masterGain = context.createGain();
+    masterGain.connect(context.destination);
 
-    var bufferLoader = new BufferLoader(
-        context,
-        [
-            'assets/sfx/gun.mp3',
-            'assets/sfx/ship_drone.mp3',
-            'assets/sfx/explosion.mp3',
-            'assets/sfx/alien.mp3',
-            'assets/sfx/alien_drone.mp3'
-        ],
-        finishedLoading
-    );
+    module.sounds = {};
 
-    bufferLoader.load();
+    module.loadSounds = function(callback) {
+        var bufferLoader = new BufferLoader(
+            context,
+            [
+                'assets/sfx/gun.mp3',
+                'assets/sfx/ship_drone.mp3',
+                'assets/sfx/explosion.mp3',
+                'assets/sfx/alien.mp3',
+                'assets/sfx/alien_drone.mp3'
+            ],
+            finishedLoading
+        );
 
-    function finishedLoading(bufferList) {
+        bufferLoader.load();
 
-        var sfxGun = new Sound(bufferList[0], context);
-        var sfxShip = new Sound(bufferList[1], context);
-        var sfxExplosion = new Sound(bufferList[2], context);
-        sfxExplosion.setGain(2);
-        var sfxAlien = new Sound(bufferList[3], context);
-        sfxAlien.setGain(2);
+        function finishedLoading(bufferList) {
 
-        sfxGun.setPannerParameters({
-            coneOuterGain: 0.9,
-            coneOuterAngle: 40,
-            coneInnerAngle: 0,
-            rolloffFactor: 0.1
-        });
-        sfxGun.setGain(0.1);
+            var sfxGun = new Sound(bufferList[0], context);
+            var sfxShip = new Sound(bufferList[1], context);
+            var sfxExplosion = new Sound(bufferList[2], context);
+            sfxExplosion.setGain(2);
+            var sfxAlien = new Sound(bufferList[3], context);
+            sfxAlien.setGain(2);
 
-        sfxShip.setPannerParameters({
-            coneOuterGain: 1,
-            coneOuterAngle: 360,
-            coneInnerAngle: 0,
-            rolloffFactor: 0.3
-        });
-        sfxShip.setGain(2.5);
+            sfxGun.setPannerParameters({
+                coneOuterGain: 0.9,
+                coneOuterAngle: 40,
+                coneInnerAngle: 0,
+                rolloffFactor: 0.1
+            });
+            sfxGun.setGain(0.1);
 
-        var sfx = {
-            gun: {
-                play: function(ship, firepower) {
-                    x = ship.x / 100;
-                    y = ship.y / 100;
-                    vx = ship.vx / 5;
-                    vy = ship.vy / 5;
-                    sfxGun.setPosition(x, y, -3);
-                    sfxGun.setVelocity(vx, vy, 0);
-                    var playbackRate = 0.5 + firepower / 20;
-                    sfxGun.setPlaybackRate(playbackRate);
-                    sfxGun.play();
-                }
-            },
-            ship: {
-                play: function(x, y) {
-                    x /= 100;
-                    y /= 100;
-                    sfxShip.setPosition(x, y, -3);
-                    sfxShip.play(true);
+            sfxShip.setPannerParameters({
+                coneOuterGain: 1,
+                coneOuterAngle: 360,
+                coneInnerAngle: 0,
+                rolloffFactor: 0.3
+            });
+            sfxShip.setGain(2.5);
+
+            module.sounds = {
+                gun: {
+                    play: function(ship, firepower) {
+                        x = ship.x / 100;
+                        y = ship.y / 100;
+                        vx = ship.vx / 5;
+                        vy = ship.vy / 5;
+                        sfxGun.setPosition(x, y, -3);
+                        sfxGun.setVelocity(vx, vy, 0);
+                        var playbackRate = 0.5 + firepower / 20;
+                        sfxGun.setPlaybackRate(playbackRate);
+                        sfxGun.play(masterGain);
+                    }
                 },
-                setParameters: function(x, y, vx, vy) {
-                    x /= 50;
-                    y /= 50;
-                    vx /= 10;
-                    vy /= 10;
-                    sfxShip.setPosition(x, y, -3);
-                    sfxShip.setVelocity(vx, vy, 0);
-                }
-            },
-            explosion: {
-                play: function(x, y, z) {
-                    x /= 100;
-                    y /= 100;
-                    z /= 1000;
-                    sfxExplosion.setPosition(x, y, z);
-                    sfxExplosion.play();
-                }
-            },
-            alien: {
-                play: function(x, y, z) {
-                    x /= 100;
-                    y /= 100;
-                    z /= 1000;
-                    sfxAlien.setPosition(x, y, z);
-                    sfxAlien.play();
-                }
-            },
-            alienDrone: {
-                create: function() {
-                    var sfxAlienDrone = new Sound(bufferList[4], context);
-                    sfxAlienDrone.setPannerParameters({
-                        coneOuterGain: 0.1,
-                        coneOuterAngle: 90,
-                        coneInnerAngle: 0,
-                        rolloffFactor: 2
-                    });
-                    sfxAlienDrone.setGain(1.5);
-                    sfxAlienDrone.play(true);
-                    return sfxAlienDrone;
+                ship: {
+                    play: function(x, y) {
+                        x /= 100;
+                        y /= 100;
+                        sfxShip.setPosition(x, y, -3);
+                        sfxShip.play(masterGain, true);
+                    },
+                    setParameters: function(x, y, vx, vy) {
+                        x /= 50;
+                        y /= 50;
+                        vx /= 10;
+                        vy /= 10;
+                        sfxShip.setPosition(x, y, -3);
+                        sfxShip.setVelocity(vx, vy, 0);
+                    }
                 },
-                /**
-                 * We take the alien and the ship as parameters so we can calculate the distance between the two,
-                 * which determines the panning.
-                 * @param sound
-                 * @param alien
-                 * @param ship
-                 */
-                setParameters: function(sound, alien, ship) {
-                    x = (alien.x - ship.x) / 100;
-                    y = (alien.y - ship.y) / 100;
-                    z = alien.z / 1000;
-                    sound.setPosition(x, y, z);
+                explosion: {
+                    play: function(x, y, z) {
+                        x /= 100;
+                        y /= 100;
+                        z /= 1000;
+                        sfxExplosion.setPosition(x, y, z);
+                        sfxExplosion.play(masterGain);
+                    }
+                },
+                alien: {
+                    play: function(x, y, z) {
+                        x /= 100;
+                        y /= 100;
+                        z /= 1000;
+                        sfxAlien.setPosition(x, y, z);
+                        sfxAlien.play(masterGain);
+                    }
+                },
+                alienDrone: {
+                    create: function() {
+                        var sfxAlienDrone = new Sound(bufferList[4], context);
+                        sfxAlienDrone.setPannerParameters({
+                            coneOuterGain: 0.1,
+                            coneOuterAngle: 90,
+                            coneInnerAngle: 0,
+                            rolloffFactor: 2
+                        });
+                        sfxAlienDrone.setGain(1.5);
+                        sfxAlienDrone.play(masterGain, true);
+                        return sfxAlienDrone;
+                    },
+                    /**
+                     * We take the alien and the ship as parameters so we can calculate the distance between the two,
+                     * which determines the panning.
+                     * @param sound
+                     * @param alien
+                     * @param ship
+                     */
+                    setParameters: function(sound, alien, ship) {
+                        x = (alien.x - ship.x) / 100;
+                        y = (alien.y - ship.y) / 100;
+                        z = alien.z / 1000;
+                        sound.setPosition(x, y, z);
+                    }
                 }
-            }
-        };
-        callback(sfx);
-    }
-}
+            };
+            callback();
+        }
+    };
+
+    module.setGain = function(value) {
+        masterGain.gain.value = value;
+    };
+
+    return module;
+})();
+
+
 
 /**
  * Object representing a sound sample, containing all audio nodes and a play method.
@@ -160,7 +176,7 @@ function Sound(buffer, context) {
         this.panner.setVelocity(vx, vy, vz);
     };
 
-    this.play = function(loop) {
+    this.play = function(outputNode, loop) {
         loop = loop || false;
         this.source = this.context.createBufferSource();
         this.source.buffer = this.buffer;
@@ -170,7 +186,7 @@ function Sound(buffer, context) {
         }
         this.source.connect(this.gain);
         this.gain.connect(this.panner);
-        this.panner.connect(this.context.destination);
+        this.panner.connect(outputNode);
         this.source.start();
     };
 

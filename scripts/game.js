@@ -10,8 +10,7 @@ var ship,
     gameStarted = false,
     gamePaused = false,
     shipStartingX = 3000,
-    shipStartingY = 6000,
-    sfx;
+    shipStartingY = 6000;
 
 /**
  * Initialize
@@ -33,15 +32,11 @@ function init() {
     levelPlayer.setLevel(levelData);
 
     // set up the audio
-    loadSounds(function(result) {
-        sfx = result;
+    sfx.loadSounds(function() {
+        // sounds loaded
     });
 
     window.requestAnimationFrame(tick);
-}
-
-function sfxListener(sound, state) {
-
 }
 
 function start() {
@@ -49,9 +44,20 @@ function start() {
 
     display.showAll();
 
-    sfx.ship.play(ship.x, ship.y);
+    sfx.sounds.ship.play(ship.x, ship.y);
 
-    setTimeout(track.show, 3000);
+    setTimeout(track.start, 3000);
+}
+
+function pause() {
+    gamePaused = true;
+    track.stop();
+}
+
+function resume() {
+    gamePaused = false;
+    track.start();
+    requestAnimationFrame(tick);
 }
 
 /**
@@ -88,21 +94,21 @@ function tick(timestamp) {
         alienFactory.spawn(event);
         display.update(event, shotFactory.firepower(), score);
 
-        sfx.ship.setParameters(ship.x, ship.y, ship.vx, ship.vy);
+        sfx.sounds.ship.setParameters(ship.x, ship.y, ship.vx, ship.vy);
         // randomly make alien noises
         if (Math.random() < 0.001) {
             var aliens = alienFactory.aliens();
             if (0 < aliens.length) {
                 var alien = aliens[Math.floor(Math.random() * aliens.length)];
-                sfx.alien.play(alien.x, alien.y, alien.z);
+                sfx.sounds.alien.play(alien.x, alien.y, alien.z);
             }
         }
         // update alien drone noises and add the sfx if not already there
         alienFactory.aliens().forEach(function(alien) {
             if (typeof alien.sound === 'undefined') {
-                alien.sound = sfx.alienDrone.create();
+                alien.sound = sfx.sounds.alienDrone.create();
             }
-            sfx.alienDrone.setParameters(alien.sound, alien.x, alien.y, alien.z);
+            sfx.sounds.alienDrone.setParameters(alien.sound, alien, ship);
         })
 
     } else {
@@ -117,7 +123,9 @@ function tick(timestamp) {
     alienFactory.updatePositions(ship, timestamp);
     collisionDetector.check(shotFactory.shots(), alienFactory.aliens());
 
-    window.requestAnimationFrame(tick);
+    if (!gamePaused) {
+        window.requestAnimationFrame(tick);
+    }
 }
 
 /**
@@ -141,11 +149,11 @@ document.addEventListener('hit', function(e) {
     var position = e.detail;
     score += 100 * shotFactory.firepower();
     levelPlayer.alienRemoved();
-    sfx.explosion.play(position.x, position.y, position.z);
+    sfx.sounds.explosion.play(position.x, position.y, position.z);
 });
 
 document.addEventListener('shot', function(e) {
-    sfx.gun.play(ship, e.detail.firepower);
+    sfx.sounds.gun.play(ship, e.detail.firepower);
 });
 
 document.addEventListener('miss', function(e) {
