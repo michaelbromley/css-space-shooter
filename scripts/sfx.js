@@ -17,7 +17,8 @@ var sfx = (function() {
                 'assets/sfx/ship_drone.mp3',
                 'assets/sfx/explosion.mp3',
                 'assets/sfx/alien.mp3',
-                'assets/sfx/alien_drone.mp3'
+                'assets/sfx/alien_drone.mp3',
+                'assets/sfx/alarm.mp3'
             ],
             finishedLoading
         );
@@ -29,10 +30,12 @@ var sfx = (function() {
             var sfxGun = new Sound(bufferList[0], context);
             var sfxShip = new Sound(bufferList[1], context);
             var sfxExplosion = new Sound(bufferList[2], context);
-            sfxExplosion.setGain(2);
             var sfxAlien = new Sound(bufferList[3], context);
-            sfxAlien.setGain(2);
+            var sfxAlarm = new Sound(bufferList[5], context);
 
+            // set some initial values
+            sfxExplosion.setGain(2);
+            sfxAlien.setGain(2);
             sfxGun.setPannerParameters({
                 coneOuterGain: 0.9,
                 coneOuterAngle: 40,
@@ -40,7 +43,6 @@ var sfx = (function() {
                 rolloffFactor: 0.1
             });
             sfxGun.setGain(0.1);
-
             sfxShip.setPannerParameters({
                 coneOuterGain: 1,
                 coneOuterAngle: 360,
@@ -122,6 +124,11 @@ var sfx = (function() {
                         y = (alien.y - ship.y) / 100;
                         z = alien.z / 1000;
                         sound.setPosition(x, y, z);
+                    }
+                },
+                alarm: {
+                    play: function() {
+                        sfxAlarm.play(masterGain);
                     }
                 }
             };

@@ -10,3 +10,4 @@
 * explosion: https://www.freesound.org/people/plamdi1/sounds/95058/
 * alien noise: https://www.freesound.org/people/mensageirocs/sounds/234442/
 * alien drone: https://www.freesound.org/people/klankbeeld/sounds/243702/
+* 1-down: https://www.freesound.org/people/leviclaassen/sounds/107789/

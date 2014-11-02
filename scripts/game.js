@@ -180,6 +180,7 @@ var game = (function() {
             if (0 < lives) {
                 lives--;
                 display.updateLives(lives);
+                sfx.sounds.alarm.play();
             }
             levelPlayer.alienRemoved();
         });
