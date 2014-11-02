@@ -27,6 +27,13 @@ var music = (function() {
         player.play();
     };
 
+    module.getAudioData = function() {
+        return {
+            volume: audioSource.volume,
+            frequencyData: audioSource.streamData
+        };
+    };
+
     return module;
 })();
 
@@ -62,7 +69,7 @@ function SoundCloudAudioSource(player) {
         player.setAttribute('src', streamUrl);
         player.play();
     }
-};
+}
 
 /**
  * Makes a request to the Soundcloud API and returns the JSON data.

@@ -5,8 +5,10 @@
 game.init(function() {
     console.log('game loaded');
     music.load('https://soundcloud.com/user5948592/l-v-beethoven-symphonie-n-7-4', function() {
+    //music.load('https://soundcloud.com/chill-trap-united/eill-dwly-chill-trap-united-exclusive', function() {
         console.log('music loaded');
     });
+    visualizer.setElement(document.querySelector('.visualizer'));
 });
 
 
@@ -17,6 +19,7 @@ document.addEventListener('keydown', function(e) {
         if (!game.isStarted()) {
             game.start();
             music.play();
+            visualizer.start(music);
             document.querySelector('.title-screen-container').classList.add('hidden');
         }
     }
