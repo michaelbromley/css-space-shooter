@@ -7,9 +7,9 @@
  */
 var levelPlayer = (function() {
     var module = {};
-    var startTime,
+    var lastTimeStamp,
+        timeElapsed = 0,
         levelData,
-        secondsElapsed,
         activeAliens = 0,
         currentStageIndex = 0,
         levelCompleted = false;
@@ -21,12 +21,9 @@ var levelPlayer = (function() {
     module.getEvents = function(timestamp) {
         var currentStage;
 
-        if (typeof startTime === 'undefined') {
-            startTime = timestamp;
-        }
-
         currentStage = getCurrentStage();
-        secondsElapsed = getSecondsElapsed(startTime, timestamp);
+        var secondsElapsed = getSecondsElapsed(timestamp);
+        console.log('seconds elapsed: ' + secondsElapsed);
         return getEventAtTime(secondsElapsed, currentStage);
     };
 
@@ -34,16 +31,22 @@ var levelPlayer = (function() {
         activeAliens = Math.max(activeAliens - 1, 0);
     };
 
-    function getSecondsElapsed(startTime, timestamp) {
-        return Math.floor((timestamp - startTime) / 1000);
+    function getSecondsElapsed(timestamp) {
+        if (typeof lastTimeStamp === 'undefined' ||
+            100 < timestamp - lastTimeStamp) {
+            lastTimeStamp = timestamp;
+        }
+        timeElapsed += (timestamp - lastTimeStamp);
+        lastTimeStamp = timestamp;
+        return Math.floor(timeElapsed / 1000);
     }
 
-    function getCurrentStage(timestamp) {
+    function getCurrentStage() {
         if (allStageEventsFired() && activeAliens === 0) {
             if (currentStageIndex < levelData.length - 1) {
                 currentStageIndex++;
                 activeAliens = 0;
-                startTime = timestamp;
+                timeElapsed = 0;
             } else {
                 levelCompleted = true;
             }
@@ -109,14 +112,6 @@ var ALIEN_CLASS = {
  * @type {{name: string, duration: number, sequence: {time: number, spawn: *[]}[]}[]}
  */
 var levelData = [
-    {
-            events: [
-                { time: 2, type: 'announcement', data: { title: 'Stage 0', subtitle: 'test!'} },
-                { time: 3, type: 'spawn', data: [
-                    { class: ALIEN_CLASS.stationary, speed: 1 }
-                ] }
-            ]
-        },
     {
         events: [
             { time: 2, type: 'announcement', data: { title: 'Stage 1', subtitle: 'Warm-up!'} },

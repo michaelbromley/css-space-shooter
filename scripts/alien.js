@@ -39,7 +39,8 @@ function Alien(el, x, y, config) {
         self.actualX = actualPosition.x;
         self.actualY = actualPosition.y;
 
-        if (self.lastTimestamp === null) {
+        if (self.lastTimestamp === null ||
+            100 < timestamp - self.lastTimestamp) {
             self.lastTimestamp = timestamp;
         }
         self.z += (timestamp - self.lastTimestamp) / 1000 * zSpeed;

@@ -18,7 +18,8 @@ function Shot(el, x, y) {
      * @returns {boolean}
      */
     self.updatePosition = function(x, y, timestamp) {
-        if (self.lastTimestamp === null) {
+        if (self.lastTimestamp === null ||
+            100 < timestamp - self.lastTimestamp) {
             self.lastTimestamp = timestamp;
         }
         self.z -= (timestamp - self.lastTimestamp) / 1000 * speed;

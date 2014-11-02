@@ -60,7 +60,8 @@ function Ship(containerElement, fieldWidth, fieldHeight) {
 
     self.updatePosition = function(timestamp) {
         var step;
-        if (self.lastTimestamp === null) {
+        if (self.lastTimestamp === null ||
+            100 < timestamp - self.lastTimestamp) {
             self.lastTimestamp = timestamp;
         }
         step = (timestamp - self.lastTimestamp) / 1000;
