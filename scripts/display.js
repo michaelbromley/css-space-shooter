@@ -1,15 +1,23 @@
 function Announcer(el) {
     var self = this;
     self.container = el;
-    self.showMessage = function(message) {
+    self.showMessage = function(message, autoHide) {
+
+        autoHide = autoHide || false;
 
         setTitle(message.title);
         setSubtitle(message.subtitle);
         self.container.classList.add('visible');
 
-        setTimeout(function() {
-            self.container.classList.remove('visible');
-        }, 2000);
+        if (autoHide) {
+            setTimeout(function () {
+                self.hideMessage();
+            }, 2000);
+        }
+    };
+
+    self.hideMessage = function() {
+        self.container.classList.remove('visible');
     };
 
     function setTitle(title) {
@@ -56,11 +64,19 @@ var display = (function() {
 
     module.update = function(event, firepower, newScore) {
         if (event.type && event.type === 'announcement') {
-            announcer.showMessage(event.data);
+            announcer.showMessage(event.data, true);
         }
 
         firepowerContainer.style.width = (firepower * 30) + 'px';
         score.innerHTML = Math.round(newScore);
+    };
+
+    module.showPausedMessage = function() {
+        announcer.showMessage({ title: 'Paused', subtitle: 'Press "p" to resume'});
+    };
+
+    module.hidePausedMessage = function() {
+        announcer.hideMessage();
     };
 
     module.updateLives = function(livesRemaining) {

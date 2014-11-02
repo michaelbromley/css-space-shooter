@@ -57,12 +57,14 @@ var game = (function() {
 
     module.pause = function() {
         gamePaused = true;
+        display.showPausedMessage();
         track.stop();
         sfx.setGain(0);
     };
 
     module.resume = function() {
         gamePaused = false;
+        display.hidePausedMessage();
         track.start();
         sfx.setGain(1);
         requestAnimationFrame(tick);
