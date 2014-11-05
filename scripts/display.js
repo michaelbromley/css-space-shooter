@@ -68,7 +68,7 @@ var display = (function() {
         }
 
         firepowerContainer.style.width = (firepower * 30) + 'px';
-        score.innerHTML = Math.round(newScore);
+        score.innerHTML = Math.round(newScore).toLocaleString();
     };
 
     module.showPausedMessage = function() {
@@ -82,9 +82,11 @@ var display = (function() {
     module.updateLives = function(livesRemaining) {
         var i, totalLives = 3;
 
-        if (livesRemaining < totalLives) {
-            for (i = totalLives; i > livesRemaining; i--) {
-                livesContainer.children[i-1].classList.add('hidden');
+        for (i = totalLives; i > 0; i--) {
+            if (i <= livesRemaining) {
+                livesContainer.children[i-1].classList.remove('hidden');
+            } else {
+                livesContainer.children[i - 1].classList.add('hidden');
             }
         }
     };

@@ -3,9 +3,20 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>CSS Space Shooter</title>
+    <meta property="twitter:card" content="summary" />
+    <meta property="twitter:site" content="@michlbrmly" />
+    <meta property="twitter:title" content="CSS Space Shooter" />
+    <meta property="twitter:description" content="A 3D shoot-em-up rendered entirely with CSS 3D transforms." />
+    <meta property="twitter:image" content="assets/images/screenshot-01.jpg" />
+    <meta property="og:title" content="CSS Space Shooter" />
+    <meta property="og:description" content="A 3D shoot-em-up rendered entirely with CSS 3D transforms." />
+    <meta property="og:image" content="assets/images/screenshot-01.jpg" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="Michael Bromley - Experiments" />
+
     <link href='http://fonts.googleapis.com/css?family=Exo:400,900italic' rel='stylesheet' type='text/css'>
     <script src="vendor/prefixfree.min.js"></script>
-    <link rel="stylesheet" href="styles/scene.css">
+    <link rel="stylesheet" href="styles/app.css">
 </head>
 <body>
 
@@ -87,15 +98,67 @@
     <div class="title-screen-container">
         <div class="title-container">
             <div class="line1">CSS</div>
-            <div class="line1">Space</div>
-            <div class="line1">Shooter</div>
+            <div class="line2">Space</div>
+            <div class="line3">Shooter</div>
         </div>
-        <div class="instructions">
-            <p>Use the arrow keys to steer, and space bar to shoot.</p>
-            <p>Don't let any aliens get past you!</p>
-            <h3 class="start-sign">Press space to start!</h3>
+
+        <div class="instructions info-container">
+            <div class="open-instructions open-info-container">Instructions</div>
+            <div class="instructions-body info-body">
+                <p>Pilot your ship with the
+                    <span class="key">↑</span>, <span class="key">↓</span>, <span class="key">←</span> & <span class="key">→</span> keys</p>
+                <p>Shoot with <span class="key">space</span></p>
+                <p>Pause / resume with <span class="key">p</span></p>
+                <p>You have 3 lives.</p>
+                <p>Don't let the aliens get past you!</p>
+                <h3 class="close-instructions close-info-container">OKAY</h3>
+            </div>
         </div>
+
+        <div class="about info-container">
+            <div class="open-about open-info-container">About</div>
+            <div class="about-body info-body">
+                <p>CSS Space Shooter is an experiment in 3D rendering using only the DOM and <a href="http://desandro.github.io/3dtransforms/" target="_blank">CSS transforms</a>.
+                    No canvas, webGL or images of any kind are used to render the game.</p>
+                <p>Sound effects, music and audio visualization is handled by the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API" target="_blank">Web Audio API</a>.</p>
+                <p>The background music is the second movement of <a href="http://en.wikipedia.org/wiki/Symphony_No._7_(Beethoven)" target="_blank">Beethoven's 7th Symphony</a>. It is streamed
+                from SoundCloud via the <a href="https://developers.soundcloud.com/" target="_blank">SoundCloud API</a>.</p>
+                <p>All code is available on <a href="https://github.com/michaelbromley/css-space-shooter" target="_blank">GitHub</a>.</p>
+                <p>&copy; 2014 <a href="http://www.michaelbromley.co.uk" target="_blank">Michael Bromley</a>.</p>
+                <h3 class="close-about close-info-container">OKAY</h3>
+            </div>
+        </div>
+
+        <h3 class="start-sign">Press space to start!</h3>
     </div>
+
+    <div class="game-over-container hidden">
+        <div class="game-won hidden">
+            <h1>Congratulations!</h1>
+            <h2>You Won!</h2>
+        </div>
+
+
+        <div class="game-lost hidden">
+            <h1>You Lost!</h1>
+            <h2>Better Luck Next Time</h2>
+        </div>
+
+        <div class="score-card">
+            <ul>
+                <li>Stage: <span class="stage-reached"></span></li>
+                <li>Score: <span class="score-achieved"></span></li>
+            </ul>
+        </div>
+
+        <h3 class="replay-sign">Press "R" to replay</h3>
+    </div>
+
+
+</div>
+
+<div class="loader">
+    <h1>Loading...</h1>
 </div>
 
 <audio id="player" controls="" autoplay="" preload autobuffer></audio>

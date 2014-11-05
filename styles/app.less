@@ -1,0 +1,211 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  box-sizing: border-box;
+  background-color: black;
+}
+
+a:link, a:visited {
+  text-decoration: none;
+  color: lightgreen;
+}
+a:hover, a:active {
+  color: green;
+}
+
+.title-screen-base() {
+  position: absolute;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  text-align: center;
+  color: white;
+  text-transform: uppercase;
+  .title-font();
+}
+
+.green-text-stroke() {
+  text-shadow:
+    -1px -1px 10px green,
+    1px -1px 0 green,
+  -1px 1px 0 green,
+  1px 1px 10px green;
+}
+
+.loader {
+  .title-screen-base();
+  background-color: black;
+  color: #a1a1a1;
+  padding-top: 25vh;
+  transition: opacity 1s, visibility 0s 1.5s;
+  h1 {
+    text-transform: uppercase;
+    font-size: 10vw;
+  }
+  &.hidden {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
+.title-screen-container {
+  .title-screen-base();
+  transition: transform 2s cubic-bezier(.88,.03,.89,.69), opacity 1s 1s, visibility 0s 2s;
+  &.hidden {
+    transform: translate3d(0px, 200px, 500px) rotateX(90deg);
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .title-container {
+    margin: 10vh auto;
+    width: 80vw;
+    font-size: 13vw;
+    color: black;
+    line-height: 10vw;
+    .green-text-stroke();
+    .line1 {
+      margin-left: -17vw;
+      font-size: 8vw;
+      line-height: 6vw;
+    }
+    .line2 {
+      margin-left: -0vw;
+    }
+    .line3 {
+      margin-left: 0;
+    }
+  }
+  .info-container {
+    color: white;
+    width: 30vw;
+    height: 8vh;
+    overflow: hidden;
+    transition: all 0.5s;
+    position: absolute;
+    top: 67vh;
+
+    &.instructions {
+      left: 10vw;
+    }
+    &.about {
+      right: 10vw;
+    }
+
+    &.display {
+      z-index: 10;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.90);
+      top: 0;
+      &.instructions {
+        left: 0;
+      }
+      &.about {
+        right: 0;
+      }
+
+      .info-body {
+        opacity: 1;
+        transition: opacity 0.5s 0.5s;
+      }
+      .open-info-container {
+        font-size: 4vw;
+        line-height: 18vh;
+      }
+    }
+    &:not(.display):hover {
+      background-color: rgba(255, 255, 255, 0.25);
+    }
+    .info-body {
+      max-width: 500px;
+      margin: auto;
+      opacity: 0;
+      transition: opacity 0.2s;
+      font-family: verdana, arial, helvetica, sans serif;
+      text-transform: none;
+      font-style: normal;
+      font-weight: 400;
+      color: #ddd;
+    }
+    .open-info-container {
+      cursor: pointer;
+      transition: font-size 0.5s, line-height 0.5s;
+      font-size: 3vw;
+      line-height: 8vh;
+    }
+    .close-info-container {
+      .title-font();
+      cursor: pointer;
+    }
+
+    .key {
+      padding: 3px 8px;
+      background-color: #808080;
+      border-radius: 3px;
+      border: 1px solid #999;
+      display: inline-block;
+      font-family: Consolas, "Lucida Console", Monaco, "Courier New", monospace;
+    }
+  }
+}
+
+.start-sign, .replay-sign {
+  position: absolute;
+  bottom: 1vh;
+  width: 100%;
+  font-size: 4vw;
+  animation: flash 1s infinite;
+}
+
+@keyframes flash {
+  0% { opacity: 0 }
+  100% { opacity: 0.7 }
+}
+
+.game-over-container {
+  .title-screen-base();
+  font-size: 2em;
+  .green-text-stroke();
+  transition: transform 5s cubic-bezier(.88,.03,.26,.94), opacity 1s 1s, visibility 0s 0s;
+  .game-won {
+    &.hidden {
+      display: none;
+    }
+  }
+
+  .game-lost {
+    &.hidden {
+      display: none;
+    }
+  }
+
+  h1 {
+    font-size: 6vw;
+  }
+  h2 {
+    font-size: 4vw;
+  }
+
+  .score-card {
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    border: 1px solid rgb(15, 61, 15);
+    background-color: rgba(0, 0, 0, 0.34);
+    max-width: 400px;
+    margin: auto;
+  }
+
+  &.hidden {
+    //transform: translate3d(0px, 200px, 500px) rotateX(90deg);
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@import "game";
+@import "visualizer";

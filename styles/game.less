@@ -1,0 +1,132 @@
+@import "vars";
+
+#player {
+  display: none;
+}
+
+.scene {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  perspective: 800px;
+  transform-origin: center center;
+  overflow: hidden;
+}
+
+.face {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-style: preserve-3d;
+}
+
+
+.overlay {
+  position: absolute;
+  overflow: hidden;
+  perspective: 800px;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.firepower-meter-container {
+  position: absolute;
+  opacity: 0.5;
+  left: 20px;
+  bottom: 20px;
+  z-index: 300;
+  overflow: hidden;
+  width: 300px;
+  height: 30px;
+  transition: transform 0.5s 4s;
+  &.hidden {
+    transform: translateX(-500px);
+  }
+  .firepower-meter {
+    display: block;
+    position: relative;
+    border-radius: 5px;
+    width: 300px;
+    height: 30px;
+    //background: linear-gradient(to right, rgba(170,34,34,1) 0%,rgba(232,131,37,1) 21%,rgba(0,226,7,1) 60%, rgb(255, 255, 255) 87%); /* W3C */
+    background: linear-gradient(to right, rgb(0, 19, 100) 0%, rgb(0, 11, 150) 21%, rgb(0, 152, 255) 60%, rgb(255, 255, 255) 87%); /* W3C */
+    span {
+      position: absolute;
+      .title-font();
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.62);
+      font-size: 27px;
+      top: -2px;
+      left: 10px;
+    }
+  }
+}
+
+.announcement {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  width: 100%;
+  margin-top: 40vh;
+  .title-font();
+  color: white;
+  text-align: center;
+  text-transform: uppercase;
+  transition: opacity 0.5s, visibility 0s;
+  &.visible {
+    opacity: 0.8;
+    visibility: visible;
+  }
+  .title {
+    font-size: 12vh;
+  }
+  .subtitle {
+    font-size: 8vh;
+  }
+}
+
+.score-container {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  transition: transform 0.5s 4s;
+  &.hidden {
+    transform: translateX(500px);
+  }
+  .score {
+    color: white;
+    font-size: 8vh;
+    font-family: @title-font;
+    font-weight: 900;
+  }
+}
+
+.lives-container {
+  position: absolute;
+  bottom: 80px;
+  right: 15px;
+  transition: transform 0.5s 4.2s;
+  &.hidden {
+    transform: translateX(500px);
+  }
+  .life {
+    font-size: 45px;
+    color: white;
+    display: inline-block;
+    opacity: 0.7;
+    transition: opacity 1s;
+    &.hidden {
+      opacity: 0;
+    }
+  }
+}
+
+@import "background";
+@import "ship";
+@import "track";
+@import "shot";
+@import "alien";

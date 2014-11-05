@@ -15,7 +15,7 @@ var levelPlayer = (function() {
         levelCompleted = false;
 
     module.setLevel = function(level) {
-        levelData = level;
+        levelData = JSON.parse(JSON.stringify(level));
     };
 
     module.getEvents = function(timestamp) {
@@ -23,12 +23,15 @@ var levelPlayer = (function() {
 
         currentStage = getCurrentStage();
         var secondsElapsed = getSecondsElapsed(timestamp);
-        console.log('seconds elapsed: ' + secondsElapsed);
         return getEventAtTime(secondsElapsed, currentStage);
     };
 
     module.alienRemoved = function() {
         activeAliens = Math.max(activeAliens - 1, 0);
+    };
+
+    module.getCurrentStage = function() {
+        return Math.round(currentStageIndex + 1);
     };
 
     function getSecondsElapsed(timestamp) {
@@ -78,8 +81,7 @@ var levelPlayer = (function() {
         } else {
             // return level complete event
             return {
-                type: 'announcement',
-                data: { title: "Congratulations!", subtitle: "You won!" }
+                type: 'completed'
             };
         }
     }
@@ -115,7 +117,7 @@ var levelData = [
     {
         events: [
             { time: 2, type: 'announcement', data: { title: 'Stage 1', subtitle: 'Warm-up!'} },
-            { time: 3, type: 'spawn', data: [
+            { time: 1, type: 'spawn', data: [
                 { class: ALIEN_CLASS.stationary, speed: 1 }
             ] },
             { time: 7, type: 'spawn', data: [

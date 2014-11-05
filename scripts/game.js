@@ -7,19 +7,24 @@ var game = (function() {
      */
     var ship,
         track,
-        hit,
+        hit,        
         score = 0,
         lives = 3,
         keysDown = [],
         gameStarted = false,
         gamePaused = false,
+        gameLost = false,
+        gameWon = false,
         shipStartingX = 3000,
-        shipStartingY = 6000;
+        shipStartingY = 6000,
+        onCompleted,
+        onDied;
 
     /**
      * Initialize
      */
     module.init = function(callback) {
+
         ship = new Ship(document.querySelector('.ship-container'),
             document.documentElement.clientWidth,
             document.documentElement.clientHeight);
@@ -40,9 +45,15 @@ var game = (function() {
             callback();
         });
 
-        addEventHandlers();
-
         window.requestAnimationFrame(tick);
+    };
+
+    module.onCompleted = function(fn) {
+        onCompleted = fn;
+    };
+
+    module.onDied = function(fn) {
+        onDied = fn;
     };
 
     module.start = function() {
@@ -52,7 +63,9 @@ var game = (function() {
 
         sfx.sounds.ship.play(ship.x, ship.y);
 
-        setTimeout(track.start, 3000);
+        setTimeout(track.start, 1000);
+
+        registerEventHandlers();
     };
 
     module.pause = function() {
@@ -70,12 +83,31 @@ var game = (function() {
         requestAnimationFrame(tick);
     };
 
-    module.isPaused = function() {
-        return gamePaused;
+    module.state = function() {
+        var status;
+
+        if (gameWon) {
+            status = 'won';
+        } else if (gameLost) {
+            status = 'lost';
+        } else if (!gameStarted) {
+            status = 'initialized';
+        } else {
+            if (gamePaused) {
+                status = 'paused';
+            } else {
+                status = 'running';
+            }
+        }
+
+        return status;
     };
 
-    module.isStarted = function() {
-        return gameStarted;
+    module.getScoreCardInfo = function() {
+        return {
+            score: score.toLocaleString(),
+            stage: levelPlayer.getCurrentStage()
+        };
     };
 
     /**
@@ -84,7 +116,12 @@ var game = (function() {
     function tick(timestamp) {
         var event;
 
-        if (gameStarted) {
+        if (!gameStarted) {
+            ship.x = shipStartingX;
+            ship.y = shipStartingY;
+        }
+
+        if (gameStarted && !gameLost) {
             if (0 < keysDown.length) {
                 if (keysDown.indexOf(39) !== -1) {
                     ship.moveLeft();
@@ -105,33 +142,11 @@ var game = (function() {
 
             event = levelPlayer.getEvents(timestamp);
 
-            if (lives === 0) {
-                event = { type: 'announcement', data: { title: 'You Died!', subtitle: 'Better luck next time!!!!'}};
-            }
-
             alienFactory.spawn(event);
             display.update(event, shotFactory.firepower(), score);
 
-            sfx.sounds.ship.setParameters(ship.x, ship.y, ship.vx, ship.vy);
-            // randomly make alien noises
-            if (Math.random() < 0.001) {
-                var aliens = alienFactory.aliens();
-                if (0 < aliens.length) {
-                    var alien = aliens[Math.floor(Math.random() * aliens.length)];
-                    sfx.sounds.alien.play(alien.x, alien.y, alien.z);
-                }
-            }
-            // update alien drone noises and add the sfx if not already there
-            alienFactory.aliens().forEach(function(alien) {
-                if (typeof alien.sound === 'undefined') {
-                    alien.sound = sfx.sounds.alienDrone.create();
-                }
-                sfx.sounds.alienDrone.setParameters(alien.sound, alien, ship);
-            })
+            doSfx();
 
-        } else {
-            ship.x = shipStartingX;
-            ship.y = shipStartingY;
         }
 
 
@@ -141,13 +156,50 @@ var game = (function() {
         alienFactory.updatePositions(ship, timestamp);
         collisionDetector.check(shotFactory.shots(), alienFactory.aliens());
 
+        checkForGameOver(event, lives);
+
         if (!gamePaused) {
             window.requestAnimationFrame(tick);
         }
     }
 
+    function doSfx() {
+        sfx.sounds.ship.setParameters(ship.x, ship.y, ship.vx, ship.vy);
 
-    function addEventHandlers() {
+        // randomly make alien noises
+        if (Math.random() < 0.001) {
+            var aliens = alienFactory.aliens();
+            if (0 < aliens.length) {
+                var alien = aliens[Math.floor(Math.random() * aliens.length)];
+                sfx.sounds.alien.play(alien.x, alien.y, alien.z);
+            }
+        }
+        // update alien drone noises and add the sfx if not already there
+        alienFactory.aliens().forEach(function(alien) {
+            if (typeof alien.sound === 'undefined') {
+                alien.sound = sfx.sounds.alienDrone.create();
+            }
+            sfx.sounds.alienDrone.setParameters(alien.sound, alien, ship);
+        })
+    }
+
+    function checkForGameOver(event, lives) {
+        if (event && event.type === 'completed') {
+            if (!gameWon) {
+                onCompleted();
+                gameWon = true;
+            }
+        }
+        if (lives === 0) {
+            if (!gameLost) {
+                onDied();
+                gameLost = true;
+            }
+        }
+    }
+
+
+    function registerEventHandlers() {
         /**
          * Event handlers
          */
