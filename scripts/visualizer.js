@@ -22,10 +22,10 @@ var visualizer = (function() {
             lowsEl.style.opacity = lows;
             highsEl.style.opacity = highs;
 
-            requestAnimationFrame(tick);
+            setTimeout(tick, 300);
         }
 
-        requestAnimationFrame(tick);
+        tick();
     };
 
     function getAverageValueInRange(frequencyData, start, end) {

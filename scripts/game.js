@@ -105,7 +105,7 @@ var game = (function() {
 
     module.getScoreCardInfo = function() {
         return {
-            score: score.toLocaleString(),
+            score: Math.round(score).toLocaleString(),
             stage: levelPlayer.getCurrentStage()
         };
     };
