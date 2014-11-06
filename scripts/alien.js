@@ -99,7 +99,7 @@ var alienFactory = (function() {
                 event.data.forEach(function (alienDefinition) {
 
                     var newElement = alienElement.cloneNode(true);
-                    var spawnX = viewportWidth * (Math.random() - 0.5) * 0.8;
+                    var spawnX = viewportWidth * (Math.random() - 0.5) * 0.7;
                     var spawnY = viewportHeight * (Math.random() - 0.5) * 0.5;
                     var sceneDiv = document.querySelector('.scene');
                     var config = getAlienConfig(alienDefinition);
