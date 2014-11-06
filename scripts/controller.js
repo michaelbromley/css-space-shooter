@@ -30,8 +30,23 @@ function init() {
 
 function fillInScoreCard() {
     var data = game.getScoreCardInfo();
+
+    var bestScore = localStorage['bestScore'];
+    var bestStage = localStorage['bestStage'];
+
+    if (typeof bestScore === 'undefined' || parseInt(bestScore.replace(',',''), 10) < parseInt(data.score.replace(',',''), 10)) {
+            document.querySelector('.new-record.score').style.display = 'inline';
+            localStorage['bestScore'] = bestScore = data.score;
+    }
+    if (typeof bestStage === 'undefined' || bestStage < data.stage) {
+            document.querySelector('.new-record.stage').style.display = 'inline';
+            localStorage['bestStage'] = bestStage = data.stage;
+    }
+
     document.querySelector('.stage-reached').innerText = data.stage;
+    document.querySelector('.best-stage').innerText = bestStage || data.stage;
     document.querySelector('.score-achieved').innerText = data.score;
+    document.querySelector('.best-score').innerText = bestScore || data.score;
 }
 
 
