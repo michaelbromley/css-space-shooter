@@ -39,10 +39,13 @@ function Shot(el, x, y) {
 }
 
 var shotFactory = (function() {
+    var MAX_FIREPOWER = 10;
+    var FIREPOWER_GAIN_PER_SECOND = 4;
+
     var shotElement;
     var shots = [];
-    var MAX_FIREPOWER = 10;
     var firepower = MAX_FIREPOWER;
+    var lastTimestamp = null;
 
     return {
         setTemplate: function(el) {
@@ -99,9 +102,7 @@ var shotFactory = (function() {
                 document.querySelector('.scene').removeChild(el);
             }
 
-            if (firepower < MAX_FIREPOWER) {
-                firepower += 0.07;
-            }
+            replenishFirepower(timestamp);
         },
         shots: function() {
             return shots;
@@ -110,6 +111,20 @@ var shotFactory = (function() {
             return firepower;
         }
     };
+
+    function replenishFirepower(timestamp) {
+        if (lastTimestamp === null ||
+            100 < timestamp - lastTimestamp) {
+            lastTimestamp = timestamp;
+        }
+        var deltaSeconds = (timestamp - lastTimestamp) / 1000;
+
+        if (firepower < MAX_FIREPOWER) {
+            firepower += deltaSeconds * FIREPOWER_GAIN_PER_SECOND;
+        }
+
+        lastTimestamp = timestamp;
+    }
 
     function emitShotEvent(x, y) {
         var event = new CustomEvent('shot', { 'detail': { firepower: firepower } });
