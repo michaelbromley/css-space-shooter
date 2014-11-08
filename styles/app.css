@@ -14,6 +14,21 @@ a:hover,
 a:active {
   color: green;
 }
+.browser-warning {
+  font-family: "Helvetic Neue", Helvetica, Arial, sans-serif;
+  padding: 10px;
+  position: absolute;
+  top: 0;
+  text-align: center;
+  background-color: yellow;
+  width: 100%;
+  color: black;
+  opacity: 0.8;
+}
+.browser-warning a:link,
+.browser-warning a:visited {
+  color: blue;
+}
 .loader {
   position: absolute;
   overflow: hidden;
@@ -59,6 +74,11 @@ a:active {
   transform: translate3d(0px, 200px, 500px) rotateX(90deg);
   opacity: 0;
   visibility: hidden;
+}
+.title-screen-container .gh-star-container {
+  text-align: right;
+  margin-top: 20px;
+  opacity: 0.6;
 }
 .title-screen-container .title-container {
   margin: 10vh auto;

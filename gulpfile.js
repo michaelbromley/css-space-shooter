@@ -94,5 +94,7 @@ gulp.task('compile', ['scripts', 'minify-css', 'static-assets', 'inject-analytic
 
 gulp.task('default', ['build'], function() {
     console.log('Watching Less files...');
-    return gulp.watch('styles/*.less', ['less']);
+    console.log('Watching index.src.html...');
+    gulp.watch('styles/*.less', ['less']);
+    gulp.watch('index.src.html', ['build']);
 });

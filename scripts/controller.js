@@ -5,7 +5,10 @@
 init();
 
 function init() {
+
+
     game.init(function () {
+
         console.log('game loaded');
         music.load('https://soundcloud.com/user5948592/l-v-beethoven-symphonie-n-7-4', function () {
             console.log('music loaded');
@@ -55,6 +58,7 @@ function registerEventHandlers() {
         var keyCode = e.which;
         if (keyCode === 32) {
             if (game.state() === 'initialized') {
+                document.querySelector('.browser-warning').style.display = 'none';
                 game.start();
                 music.play();
                 visualizer.start(music);

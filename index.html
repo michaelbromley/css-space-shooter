@@ -98,6 +98,11 @@
     </div>
 
     <div class="title-screen-container">
+
+        <div class="gh-star-container">
+            <iframe src="http://ghbtns.com/github-btn.html?user=michaelbromley&repo=css-space-shooter&type=watch&count=true"
+                                                           allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe>
+        </div>
         <div class="title-container">
             <div class="line1">CSS</div>
             <div class="line2">Space</div>
@@ -161,16 +166,30 @@
 
         <h3 class="replay-sign">Press "R" to replay</h3>
     </div>
-
-
 </div>
 
 <div class="loader">
     <h1>Loading...</h1>
 </div>
 
+<div class="browser-warning">
+    This experiment might not work properly unless you run it in the latest versions of the <a href="https://www.google.com/chrome/browser/">Chrome browser</a>. Sorry!
+</div>
+
 <audio id="player" controls="" autoplay="" preload autobuffer></audio>
 
+<script>
+    if (isChrome()) {
+        document.querySelector('.browser-warning').style.display = 'none';
+    }
+    /**
+     * Currently only really works well in Chrome, so we need to show a warning if not Chrome.
+     * @returns {boolean}
+     */
+    function isChrome() {
+        return navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+    }
+</script>
 <script src="http://connect.soundcloud.com/sdk.js"></script>
 <!-- inject:js -->
 <script src="scripts/alien.js"></script>
