@@ -66,6 +66,7 @@ var game = (function() {
         setTimeout(track.start, 1000);
 
         registerEventHandlers();
+        hideCursor();
     };
 
     module.pause = function() {
@@ -73,6 +74,7 @@ var game = (function() {
         display.showPausedMessage();
         track.stop();
         sfx.setGain(0);
+        showCursor();
     };
 
     module.resume = function() {
@@ -80,6 +82,7 @@ var game = (function() {
         display.hidePausedMessage();
         track.start();
         sfx.setGain(1);
+        hideCursor();
         requestAnimationFrame(tick);
     };
 
@@ -198,6 +201,12 @@ var game = (function() {
         }
     }
 
+    function hideCursor() {
+        document.body.style.cursor = 'none';
+    }
+    function showCursor() {
+        document.body.style.cursor = 'inherit';
+    }
 
     function registerEventHandlers() {
         /**
