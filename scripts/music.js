@@ -107,7 +107,7 @@ function SoundcloudLoader(player) {
                         errorCallback();
                     } else {
 
-                        this.successfullyLoaded = true;
+                        self.successfullyLoaded = true;
                         console.log('music loaded');
 
                         if (sound.kind == "playlist") {
