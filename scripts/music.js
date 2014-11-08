@@ -16,7 +16,9 @@ var music = (function() {
     };
 
     module.play = function() {
-        audioSource.playStream(loader.streamUrl());
+        if (loader.successfullyLoaded) {
+            audioSource.playStream(loader.streamUrl());
+        }
     };
 
     module.pause = function() {
@@ -81,6 +83,7 @@ function SoundcloudLoader(player) {
     this.streamUrl = "";
     this.errorMessage = "";
     this.player = player;
+    this.successfullyLoaded = false;
 
     /**
      * Loads the JSON stream data object from the URL of the track (as given in the location bar of the browser when browsing Soundcloud),
@@ -89,33 +92,48 @@ function SoundcloudLoader(player) {
      * @param callback
      */
     this.loadStream = function(track_url, successCallback, errorCallback) {
-        SC.initialize({
-            client_id: client_id
-        });
-        SC.get('/resolve', { url: track_url }, function(sound) {
-            if (sound.errors) {
-                self.errorMessage = "";
-                for (var i = 0; i < sound.errors.length; i++) {
-                    self.errorMessage += sound.errors[i].error_message + '<br>';
-                }
-                self.errorMessage += 'Make sure the URL has the correct format: https://soundcloud.com/user/title-of-the-track';
-                errorCallback();
-            } else {
+        if (typeof SC !== 'undefined') {
+            SC.initialize({
+                client_id: client_id
+            });
+            SC.get('/resolve', {url: track_url}, function (sound) {
+                if (sound) {
+                    if (sound.errors) {
+                        self.errorMessage = "";
+                        for (var i = 0; i < sound.errors.length; i++) {
+                            self.errorMessage += sound.errors[i].error_message + '<br>';
+                        }
+                        self.errorMessage += 'Make sure the URL has the correct format: https://soundcloud.com/user/title-of-the-track';
+                        errorCallback();
+                    } else {
 
-                if(sound.kind=="playlist"){
-                    self.sound = sound;
-                    self.streamPlaylistIndex = 0;
-                    self.streamUrl = function(){
-                        return sound.tracks[self.streamPlaylistIndex].stream_url + '?client_id=' + client_id;
-                    };
-                    successCallback();
-                }else{
-                    self.sound = sound;
-                    self.streamUrl = function(){ return sound.stream_url + '?client_id=' + client_id; };
-                    successCallback();
+                        this.successfullyLoaded = true;
+                        console.log('music loaded');
+
+                        if (sound.kind == "playlist") {
+                            self.sound = sound;
+                            self.streamPlaylistIndex = 0;
+                            self.streamUrl = function () {
+                                return sound.tracks[self.streamPlaylistIndex].stream_url + '?client_id=' + client_id;
+                            };
+                            successCallback();
+                        } else {
+                            self.sound = sound;
+                            self.streamUrl = function () {
+                                return sound.stream_url + '?client_id=' + client_id;
+                            };
+                            successCallback();
+                        }
+                    }
+                } else {
+                    console.log('An unspecified error occurred. No music could be loaded');
+                    successCallback(); // call success just so the game will still run
                 }
-            }
-        });
+            });
+        } else {
+            console.log('SoundCloud library not found. No music could be loaded');
+            successCallback(); // call success just so the game will still run
+        }
     };
 
 

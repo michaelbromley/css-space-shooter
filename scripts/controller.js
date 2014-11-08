@@ -11,7 +11,6 @@ function init() {
 
         console.log('game loaded');
         music.load('https://soundcloud.com/user5948592/l-v-beethoven-symphonie-n-7-4', function () {
-            console.log('music loaded');
             document.querySelector('.loader').classList.add('hidden');
             registerEventHandlers();
         });
