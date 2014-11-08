@@ -1,4 +1,9 @@
 .idea
+node_modules
+dist
+google-analytics.html
+soundcloud-id.js
+
 
 # Windows image file caches
 Thumbs.db
