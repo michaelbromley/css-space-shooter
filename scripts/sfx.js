@@ -59,7 +59,7 @@ var sfx = (function() {
                         vx = ship.vx / 5;
                         vy = ship.vy / 5;
                         sfxGun.setPosition(x, y, -3);
-                        sfxGun.setVelocity(vx, vy, 0);
+                        // sfxGun.setVelocity(vx, vy, 0);
                         var playbackRate = 0.5 + firepower / 20;
                         sfxGun.setPlaybackRate(playbackRate);
                         sfxGun.play(masterGain);
@@ -78,7 +78,7 @@ var sfx = (function() {
                         vx /= 10;
                         vy /= 10;
                         sfxShip.setPosition(x, y, -3);
-                        sfxShip.setVelocity(vx, vy, 0);
+                        // sfxShip.setVelocity(vx, vy, 0);
                     }
                 },
                 explosion: {
@@ -180,7 +180,7 @@ function Sound(buffer, context) {
     };
 
     this.setVelocity = function(vx, vy, vz) {
-        this.panner.setVelocity(vx, vy, vz);
+        // this.panner.setVelocity(vx, vy, vz);
     };
 
     this.play = function(outputNode, loop) {
