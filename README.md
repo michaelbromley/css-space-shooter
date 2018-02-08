@@ -2,10 +2,10 @@
 
 ![Screen shot](https://raw.githubusercontent.com/michaelbromley/css-space-shooter/master/assets/images/screenshot-02.jpg "Screen shot")
 
-## [Play The Game](http://www.michaelbromley.co.uk/experiments/css-space-shooter/)
+## [Play The Game](https://www.michaelbromley.co.uk/experiments/css-space-shooter/)
 
 This is an experiment I made to investigate the capabilities of CSS 3D transforms.
-Having played about with this technology a little (see [this](http://www.michaelbromley.co.uk/experiments/css-3d-butterfly/) or [this](http://www.michaelbromley.co.uk/horizonal/demo/),
+Having played about with this technology a little (see [this](https://www.michaelbromley.co.uk/experiments/css-3d-butterfly/) or [this](http://www.michaelbromley.co.uk/horizonal/demo/),
 and having seen some very impressive demos ([CSS FPS](http://www.keithclark.co.uk/labs/css-fps/), [CSS X-Wing](http://codepen.io/juliangarnier/details/hzDAF),
 I wanted to explore the idea of making a simple 3D game with only DOM and CSS.
 
@@ -16,7 +16,7 @@ worry about any of the complex maths involved in projecting a 3D object onto the
 that. You just need to specify the x, y, z coordinates as well as the rotation along any axis. This makes it really simple to map your JavaScript objects onto the
 screen, by just keeping track of these simple coordinate and rotation values.
 
-Having [previously played with pseudo-3D in canvas](http://www.michaelbromley.co.uk/experiments/soundcloud-vis/#muse/undisclosed-desires), I have some idea
+Having [previously played with pseudo-3D in canvas](https://www.michaelbromley.co.uk/experiments/soundcloud-vis/#muse/undisclosed-desires), I have some idea
 of the massive amount of calculation involved in plotting all the lines and vertices of each
 object manually. In this regard, the simple, declarative nature of CSS allows some really powerful 3D effects with astonishingly little code.
 
@@ -48,7 +48,6 @@ with transforms, which works well.
 * html5Rocks - Some really helpful tutorials [here](http://www.html5rocks.com/en/tutorials/webaudio/games/) and [here](http://www.html5rocks.com/en/tutorials/webaudio/intro/)
  on how to use the Web Audio API.
 * Dive Into HTML5 [article on the localStorage API](http://diveintohtml5.info/storage.html), which I use to store high scores.
-* SoundCloud provide a great API to allow streaming of music in your apps. Check out https://developers.soundcloud.com/.
 
 ### Sound effects
 
@@ -59,6 +58,15 @@ I got all my sounds effects from https://www.freesound.org.
 * alien noise: https://www.freesound.org/people/mensageirocs/sounds/234442/
 * alien drone: https://www.freesound.org/people/klankbeeld/sounds/243702/
 * 1-down: https://www.freesound.org/people/leviclaassen/sounds/107789/
+
+
+## Developing
+
+```
+npm install
+npm run watch // dev mode 
+npm run compile // production build
+```
 
 ## License
 

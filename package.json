@@ -4,7 +4,8 @@
   "description": "A 3D space shoot-em-up rendered with CSS",
   "main": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watch": "gulp",
+    "compile": "gulp compile"
   },
   "repository": {
     "type": "git",

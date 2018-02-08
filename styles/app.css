@@ -828,7 +828,7 @@ a:active {
   width: 100%;
   background: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(89, 86, 255, 0.8) 100%);
   height: 25vh;
-  transition: opacity 0.3s linear;
+  transition: opacity 0.1s linear;
 }
 .visualizer .lows {
   position: absolute;
@@ -836,5 +836,5 @@ a:active {
   bottom: 0;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(89, 86, 255, 0.8) 100%);
   height: 25vh;
-  transition: opacity 0.3s linear;
+  transition: opacity 0.1s linear;
 }
