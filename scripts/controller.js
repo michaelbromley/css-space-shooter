@@ -10,10 +10,10 @@ function init() {
     game.init(function () {
 
         console.log('game loaded');
-        // music.load('https://soundcloud.com/user5948592/l-v-beethoven-symphonie-n-7-4', function () {
+        music.load('./assets/sfx/music.mp3', function () {
             document.querySelector('.loader').classList.add('hidden');
             registerEventHandlers();
-        // });
+        });
         visualizer.setElement(document.querySelector('.visualizer'));
     });
 
@@ -59,18 +59,18 @@ function registerEventHandlers() {
             if (game.state() === 'initialized') {
                 document.querySelector('.browser-warning').style.display = 'none';
                 game.start();
-                // music.play();
-                // visualizer.start(music);
+                music.play();
+                visualizer.start(music);
                 document.querySelector('.title-screen-container').classList.add('hidden');
             }
         }
         if (keyCode === 80) {
             if (game.state() === 'paused') {
                 game.resume();
-                // music.resume();
+                music.resume();
             } else {
                 game.pause();
-                // music.pause();
+                music.pause();
             }
         }
         if (keyCode === 82) {
