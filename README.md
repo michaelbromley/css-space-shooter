@@ -28,7 +28,7 @@ only possible through [dirty hacks with the border property](http://davidwalsh.n
 Secondly, performance. Despite hardware acceleration for these 3D transforms, I quickly ran into performance issues when scaling up the number of objects
  interacting on screen simultaneously. Certain CSS operations are also *very* expensive, such as transitioning box-shadow values or gradient backgrounds.
 
-I'm sure my code can be optimized and this performance ceiling can be raised considerably. However, I wouldn't recommend using CSS and DOM for a serious 3D game.
+I am sure my code can be optimized and this performance ceiling can be raised considerably. However, I wouldn't recommend using CSS and DOM for a serious 3D game.
 
 ## Browser Compatibility
 
@@ -72,6 +72,6 @@ npm run watch // dev mode
 npm run compile // production build
 ```
 
-## License
+### License
 
 MIT
