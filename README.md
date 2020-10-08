@@ -7,7 +7,7 @@
 This is an experiment I made to investigate the capabilities of CSS 3D transforms.
 Having played about with this technology a little (see [this](https://www.michaelbromley.co.uk/experiments/css-3d-butterfly/) or [this](http://www.michaelbromley.co.uk/horizonal/demo/),
 and having seen some very impressive demos ([CSS FPS](http://www.keithclark.co.uk/labs/css-fps/), [CSS X-Wing](http://codepen.io/juliangarnier/details/hzDAF),
-I wanted to explore the idea of making a simple 3D game with only DOM and CSS.
+I wanted to explore the idea of making a simple 3D game with only DOM and CSS and made this 3D game.
 
 ## Everything in CSS? Cool!
 
